@@ -150,7 +150,7 @@ export default function EventDetailPage() {
           </Link>
         </div>
       </article>
-      <CtaBand title="Un événement à organiser ? Parlons-en." to={`${ROUTES.quote}?besoin=evenementiel`} />
+      <CtaBand title="Un événement à organiser ? Parlons-en." to={`${ROUTES.quote}?besoin=evenementiel`} />
     </>
   );
 }

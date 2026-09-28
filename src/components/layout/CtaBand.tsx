@@ -15,7 +15,7 @@ interface CtaBandProps {
 
 /** Appel à l'action final : l'un des rares aplats en dégradé du site. */
 export function CtaBand({
-  title = "Un projet en tête ? Parlons-en.",
+  title = "Un projet en tête ? Parlons-en.",
   text = "Stratégie, création, production, événement ou accompagnement : décrivez-nous votre besoin, nous revenons vers vous avec une proposition adaptée.",
   to = PRIMARY_CTA.to,
 }: CtaBandProps) {

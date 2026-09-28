@@ -66,7 +66,7 @@ export default function TeamPage() {
         )}
       </section>
 
-      <CtaBand title="Envie de travailler avec nous ? Parlons-en." />
+      <CtaBand title="Envie de travailler avec nous ? Parlons-en." />
     </>
   );
 }

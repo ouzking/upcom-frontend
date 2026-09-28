@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, type Plugin } from "vite";
 
 const LOCAL_HOST = /^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])(:\d+)?(\/|$)/i;
 
@@ -25,12 +25,24 @@ function assertProductionEnv(mode: string): void {
   }
 }
 
+/** Préconnexion au projet Supabase (dérivée de VITE_SUPABASE_URL, jamais codée en dur). */
+function supabasePreconnect(mode: string): Plugin {
+  return {
+    name: "upcom-supabase-preconnect",
+    transformIndexHtml() {
+      const url = ({ ...loadEnv(mode, process.cwd(), "VITE_"), ...process.env }).VITE_SUPABASE_URL;
+      if (!url) return [];
+      return [{ tag: "link", attrs: { rel: "preconnect", href: new URL(url).origin, crossorigin: "" }, injectTo: "head" }];
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
   if (command === "build" && mode === "production") assertProductionEnv(mode);
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), supabasePreconnect(mode)],
     resolve: {
       alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
     },

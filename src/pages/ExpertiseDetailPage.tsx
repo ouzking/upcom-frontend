@@ -167,7 +167,7 @@ export default function ExpertiseDetailPage() {
         </div>
       </section>
 
-      <CtaBand to={quoteLink} title={`Un projet en ${expertise.shortName.toLowerCase()} ? Parlons-en.`} />
+      <CtaBand to={quoteLink} title={`Un projet en ${expertise.shortName.toLowerCase()}\u00a0? Parlons-en.`} />
     </>
   );
 }

@@ -17,13 +17,18 @@ Prérequis : Node.js ≥ 20.
 
 ```bash
 npm install
-cp .env.example .env.local      # renseigner l'URL et la clé publishable Supabase
+cp .env.example .env.development.local   # URL + clé publishable Supabase (dev uniquement)
 npm run dev                     # http://localhost:5173
 ```
 
 En local, démarrez le backend (`npm run db:start` et `npm run functions:serve` dans `upcom-backend`), puis
-reportez l'`API_URL` et la `PUBLISHABLE_KEY` affichées dans `.env.local`. Sans configuration Supabase, le site
-reste navigable : il affiche le contenu officiel embarqué et des états vides soignés.
+reportez l'`API_URL` et la `PUBLISHABLE_KEY` affichées dans `.env.development.local`.
+
+> ⚠ N'utilisez pas `.env.local` : Vite le charge aussi pour les builds de production, ce qui a déjà
+> embarqué une URL locale (`127.0.0.1`) en production. Pour un build de production local, utilisez
+> `.env.production.local`. Le build échoue désormais si l'URL Supabase manque ou est locale, et
+> l'application affiche un écran d'indisponibilité (avec les téléphones) si la configuration est invalide. Quand la base contient peu de contenu, le site
+affiche le contenu officiel embarqué et des états vides soignés.
 
 | Script | Rôle |
 |---|---|
@@ -82,6 +87,7 @@ n'importent jamais le client Supabase.
 | `/evenements`, `/evenements/:slug` | Événements (à venir / passés, export agenda `.ics`) |
 | `/contact` | Coordonnées, WhatsApp, formulaire, carte |
 | `/demarrer-un-projet` | Demande de projet (`?besoin=<pôle>` ou `?service=<uuid>` pour préremplir) |
+| `/mentions-legales`, `/confidentialite` | Informations légales |
 
 \* affichés uniquement si des témoignages sont publiés.
 
