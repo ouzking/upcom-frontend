@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Remplacé au build par scripts/generate-seo-files.mjs avec l'URL définitive (VITE_SITE_URL).
+Sitemap: /sitemap.xml

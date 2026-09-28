@@ -1,0 +1,17 @@
+# Déploiement Netlify du site public UPCOM.
+# Variables à définir dans Netlify (Site configuration → Environment variables) :
+#   VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY (+ VITE_TURNSTILE_SITE_KEY si Turnstile est activé)
+# Le build échoue volontairement si elles manquent ou pointent vers une adresse locale.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Application monopage : toutes les routes servent index.html (les fichiers existants restent prioritaires).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

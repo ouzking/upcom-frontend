@@ -1,111 +1,223 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "@fontsource-variable/bricolage-grotesque/wght.css";
+@import "@fontsource-variable/manrope/wght.css";
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* ==========================================================================
+   UPCOM — système de design
+   Bleu institutionnel dominant · orange en accent · blanc pour respirer.
+   ========================================================================== */
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  /* Couleurs de marque (charte officielle) */
+  --color-brand: #013592;
+  --color-brand-bright: #0172e7;
+  --color-brand-deep: #012466;
+  --color-brand-night: #011a4a;
+  --color-accent: #fd8e03;
+  --color-accent-deep: #eb4602;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  /* Neutres */
+  --color-ink: #0a1633;
+  --color-ink-soft: #2b3656;
+  --color-muted: #566079;
+  --color-line: #e3e8f2;
+  --color-mist: #f4f6fb;
+  --color-paper: #ffffff;
+
+  /* Typographie */
+  --font-display: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Manrope Variable", "Segoe UI", system-ui, sans-serif;
+
+  /* Mouvement */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --breakpoint-3xl: 112rem;
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-orbit: orbit 38s linear infinite;
+  --animate-orbit-reverse: orbit 52s linear infinite reverse;
+
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+  @keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 6rem;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-balance;
+    font-optical-sizing: auto;
+  }
+
+  p { @apply text-pretty; }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* --------------------------------------------------------------------------
+   Utilitaires
+   -------------------------------------------------------------------------- */
+
+/* Conteneur éditorial : gouttières fluides, largeur plafonnée sur grand écran */
+@utility container-page {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
 }
 
-body {
-  margin: 0;
+/* Échelle typographique fluide (mobile → grand écran) */
+@utility text-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 7.4vw, 7.25rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+@utility text-display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5.2vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+@utility text-display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.6vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  font-weight: 650;
+}
+@utility text-display-sm {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+@utility text-lead {
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  line-height: 1.6;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* Dégradés officiels — usage sobre */
+@utility bg-gradient-brand {
+  background-image: linear-gradient(120deg, var(--color-brand) 0%, var(--color-brand-bright) 100%);
+}
+@utility bg-gradient-accent {
+  background-image: linear-gradient(120deg, var(--color-accent-deep) 0%, var(--color-accent) 100%);
+}
+@utility text-gradient-accent {
+  background-image: linear-gradient(100deg, var(--color-accent-deep), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+/* Trame fine type « plan » pour donner de la profondeur aux fonds clairs */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-brand) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-brand) 7%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Grain très léger pour les aplats sombres */
+@utility bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+/* Texte riche (articles, réalisations, services) */
+@utility prose-upcom {
+  color: var(--color-ink-soft);
+  font-size: 1.075rem;
+  line-height: 1.8;
+
+  & > * + * { margin-top: 1.25em; }
+  & h2 {
+    color: var(--color-ink);
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 650;
+    margin-top: 2em;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+  & h3 {
+    color: var(--color-ink);
+    font-size: 1.3rem;
+    font-weight: 650;
+    margin-top: 1.6em;
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  & a {
+    color: var(--color-brand);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 3px;
+  }
+  & strong { color: var(--color-ink); font-weight: 700; }
+  & ul, & ol { padding-left: 1.25em; }
+  & ul { list-style: none; }
+  & ul > li { position: relative; }
+  & ul > li::before {
+    content: "";
+    position: absolute;
+    left: -1.1em;
+    top: 0.8em;
+    width: 0.45em;
+    height: 2px;
+    background: var(--color-accent);
+  }
+  & ol { list-style: decimal; }
+  & li + li { margin-top: 0.4em; }
+  & blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.25em;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.3em;
+    line-height: 1.45;
+    color: var(--color-ink);
+  }
 }
