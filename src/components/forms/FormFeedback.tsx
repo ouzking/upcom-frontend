@@ -35,7 +35,7 @@ export function FormSuccess({ title, text, email, actions }: { title: string; te
       role="status"
       tabIndex={-1}
       ref={(node) => node?.focus()}
-      className="rounded-[2rem] border border-line bg-white p-8 text-center outline-none sm:p-14"
+      className="py-6 text-center outline-none sm:py-10"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: EASE }}
@@ -46,10 +46,10 @@ export function FormSuccess({ title, text, email, actions }: { title: string; te
       </svg>
       <h2 className="mt-8 text-display-sm text-ink">{title}</h2>
       {email ? (
-        <p className="mx-auto mt-5 inline-flex max-w-md items-center gap-2 rounded-full bg-mist px-4 py-2 text-sm text-ink">
-          <MailCheck className="size-4 shrink-0 text-brand" aria-hidden="true" />
+        <p className="mx-auto mt-6 flex max-w-md items-start gap-3 rounded-2xl bg-mist px-5 py-4 text-left text-sm leading-relaxed text-ink">
+          <MailCheck className="mt-0.5 size-5 shrink-0 text-brand" aria-hidden="true" />
           <span>
-            Un e-mail de confirmation vous a été envoyé à <strong className="break-all">{email}</strong>.
+            Un e-mail de confirmation vous a été envoyé à <strong className="[overflow-wrap:anywhere]">{email}</strong>.
           </span>
         </p>
       ) : null}
