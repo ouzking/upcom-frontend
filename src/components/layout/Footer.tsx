@@ -9,7 +9,6 @@ import { telHref } from "@/lib/format";
 export function Footer() {
   const { data: site } = useSiteInfo();
   const { data: expertises = [] } = useExpertises();
-  const year = new Date().getFullYear();
 
   return (
     <footer className="relative isolate overflow-hidden bg-brand-night text-white" aria-labelledby="footer-title">
@@ -98,7 +97,7 @@ export function Footer() {
         <div className="mt-20 flex flex-col-reverse gap-6 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
             <p>
-              © {year} {site?.companyName}. Tous droits réservés.
+              © {site?.companyName}. Tous droits réservés.
             </p>
             <nav aria-label="Informations légales" className="flex gap-5">
               <Link to={ROUTES.legal} className="transition hover:text-accent">
