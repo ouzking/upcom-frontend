@@ -1,79 +1,40 @@
-# Build (avec pré-rendu des pages et génération du sitemap) puis déploiement en production sur Netlify.
+# Republication nocturne du site public.
 #
-# Déclencheurs :
-#   - chaque nuit à 02:00 (heure de Dakar = UTC) : les contenus publiés ou programmés depuis le
-#     back-office obtiennent leur page pré-rendue et leur entrée dans sitemap.xml sans intervention ;
-#   - chaque push sur main ;
-#   - manuellement (onglet Actions → « Déploiement Netlify » → Run workflow), par ex. après une
-#     publication importante.
+# Le site Netlify est relié à ce dépôt : chaque push sur main est construit et déployé par
+# Netlify (npm run build : pré-rendu des pages + sitemap.xml). Le back-office relance aussi
+# la génération après chaque publication (Edge Function trigger-site-rebuild → build hook).
 #
-# Configuration GitHub (Settings → Secrets and variables → Actions) :
-#   Secrets   : NETLIFY_AUTH_TOKEN (jeton personnel Netlify), NETLIFY_SITE_ID
-#   Variables : VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, VITE_SITE_URL
-#               (+ VITE_TURNSTILE_SITE_KEY le jour où Turnstile est activé)
-# Aucune clé secrète Supabase (service_role / sb_secret_) n'est nécessaire ni autorisée ici.
+# Ce workflow couvre le cas restant : les articles PROGRAMMÉS, qui deviennent visibles à leur
+# date sans aucune publication. Chaque nuit à 02:00 (heure de Dakar = UTC), il déclenche le
+# build hook Netlify pour qu'ils obtiennent leur page pré-rendue et leur entrée dans le sitemap.
+# Déclenchement manuel possible : onglet Actions → « Republication nocturne » → Run workflow.
+#
+# Configuration : secret GitHub NETLIFY_BUILD_HOOK_URL (Netlify → Site configuration →
+# Build & deploy → Build hooks). Sans ce secret, le workflow se termine sans rien faire.
 
-name: Déploiement Netlify
+name: Republication nocturne
 
 on:
   schedule:
     - cron: "0 2 * * *"
-  push:
-    branches: [main]
   workflow_dispatch:
-
-concurrency:
-  group: netlify-production
-  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  deploy:
-    # Ignoré tant que la configuration GitHub (variables + secrets ci-dessus) n'est pas en place.
-    if: ${{ vars.VITE_SUPABASE_URL != '' }}
+  rebuild:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
-      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
-      VITE_SITE_URL: ${{ vars.VITE_SITE_URL || 'https://www.upcomagency.com' }}
-      VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      # Le package de types @upcom/supabase (dépôt public upcom-backend) est référencé en SSH
-      # dans package-lock.json : on le récupère en HTTPS, sans clé.
-      - name: Dépendances Git via HTTPS
-        run: |
-          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-          git config --global --add url."https://github.com/".insteadOf "git@github.com:"
-
-      - run: npm ci
-
-      - run: npm run lint
-
-      # Typecheck, build client, build serveur, pré-rendu, sitemap.xml et robots.txt.
-      # Échoue si les variables Supabase manquent ou pointent vers une adresse locale.
-      - run: npm run build
-
-      - name: Contrôle — aucune URL locale dans le site généré
-        run: |
-          if grep -rqE "127\.0\.0\.1:54321|localhost:5173" dist; then
-            echo "::error::URL locale détectée dans dist/" && exit 1
-          fi
-
-      - name: Déploiement en production
+      - name: Déclencher le build Netlify
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: >
-          npx --yes netlify-cli@27 deploy --prod --dir dist --no-build
-          --site "$NETLIFY_SITE_ID"
-          --message "GitHub Actions — ${{ github.event_name }} — ${GITHUB_SHA::7}"
+          NETLIFY_BUILD_HOOK_URL: ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
+        run: |
+          if [ -z "$NETLIFY_BUILD_HOOK_URL" ]; then
+            echo "::notice::Secret NETLIFY_BUILD_HOOK_URL absent : republication ignorée."
+            exit 0
+          fi
+          curl --fail --silent --show-error -X POST -d '{}' \
+            "${NETLIFY_BUILD_HOOK_URL}?trigger_title=Republication+nocturne+(GitHub+Actions)"
+          echo "Build Netlify déclenché."

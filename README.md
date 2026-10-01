@@ -195,25 +195,21 @@ Hébergement **Netlify** : `netlify.toml` (Node 22, repli vers `app.html`), `pub
 (HSTS, nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, CSP limitée au projet Supabase et à Cloudflare, cache).
 Le build de production échoue si `VITE_SUPABASE_URL` / `VITE_SUPABASE_PUBLISHABLE_KEY` manquent ou sont locales.
 
-### Déploiement automatique (GitHub Actions)
+### Déploiement automatique
 
-`.github/workflows/deploy.yml` construit le site (pré-rendu + sitemap) et le déploie en production :
-**chaque nuit à 02:00** (contenus publiés ou articles programmés depuis le back-office intégrés au sitemap sans
-intervention), **à chaque push sur `main`**, et **à la demande** (Actions → « Déploiement Netlify » → Run workflow).
-Le site Netlify n'étant pas relié à Git, le workflow déploie via la CLI Netlify (un *build hook* Netlify exigerait
-ce lien).
+Le site Netlify est **relié à ce dépôt** (branche `main`, commande `npm run build`, dossier `dist`, Node 22 via
+`netlify.toml`). Variables d'environnement définies dans Netlify : `VITE_SUPABASE_URL`,
+`VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_SITE_URL` (+ `VITE_TURNSTILE_SITE_KEY` le jour où Turnstile est activé).
 
-Configuration (GitHub → Settings → Secrets and variables → Actions) — le workflow est ignoré tant qu'elle manque :
+| Déclencheur | Effet |
+|---|---|
+| Push sur `main` | Netlify construit (pré-rendu + sitemap) et publie |
+| Publication depuis le back-office | Edge Function `trigger-site-rebuild` → build hook Netlify « back-office » |
+| Chaque nuit à 02:00 (Dakar) | `.github/workflows/deploy.yml` déclenche le build hook : les **articles programmés** devenus visibles obtiennent leur page et leur entrée dans le sitemap |
 
-| Type | Nom | Valeur |
-|---|---|---|
-| Secret | `NETLIFY_AUTH_TOKEN` | jeton personnel Netlify (User settings → Applications → New access token) |
-| Secret | `NETLIFY_SITE_ID` | `0868c1b1-77d7-4d7b-aca9-5f96a2e90e9d` |
-| Variable | `VITE_SUPABASE_URL` | `https://gopjiglltfohtzeqijsq.supabase.co` |
-| Variable | `VITE_SUPABASE_PUBLISHABLE_KEY` | clé publishable du projet (publique) |
-| Variable | `VITE_SITE_URL` | `https://www.upcomagency.com` |
-
-Déploiement manuel (dépannage) : `npm run build` puis `netlify deploy --prod --dir dist --no-build`.
+Pour le workflow nocturne : secret GitHub `NETLIFY_BUILD_HOOK_URL` (URL du build hook, Netlify → Build & deploy →
+Build hooks). Sans ce secret, il se termine sans rien faire. Déploiement manuel (dépannage) : `npm run build` puis
+`netlify deploy --prod --dir dist --no-build`.
 
 ### Conventions partagées avec le back-office
 
