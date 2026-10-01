@@ -2,6 +2,45 @@
 @import "@fontsource-variable/manrope/wght.css";
 @import "tailwindcss";
 
+/* Polices de repli calibrées (largeur et hauteur de ligne) sur Bricolage Grotesque et Manrope :
+   le remplacement par la police définitive, une fois chargée, ne décale plus la mise en page (CLS). */
+@font-face {
+  font-family: "Bricolage Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 500 900;
+  size-adjust: 100.63%;
+  ascent-override: 92.42%;
+  descent-override: 26.83%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Bricolage Fallback";
+  src: local("Arial"), local("ArialMT");
+  font-weight: 100 499;
+  size-adjust: 100.63%;
+  ascent-override: 92.42%;
+  descent-override: 26.83%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Arial"), local("ArialMT");
+  font-weight: 100 599;
+  size-adjust: 104.05%;
+  ascent-override: 102.45%;
+  descent-override: 28.83%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 600 900;
+  size-adjust: 104.05%;
+  ascent-override: 102.45%;
+  descent-override: 28.83%;
+  line-gap-override: 0%;
+}
+
 /* ==========================================================================
    UPCOM — système de design
    Bleu institutionnel dominant · orange en accent · blanc pour respirer.
@@ -15,6 +54,8 @@
   --color-brand-night: #011a4a;
   --color-accent: #fd8e03;
   --color-accent-deep: #eb4602;
+  /* Orange assombri réservé au texte sur fond clair (contraste AA 5,4:1). */
+  --color-accent-ink: #c23a00;
 
   /* Neutres */
   --color-ink: #0a1633;
@@ -25,8 +66,8 @@
   --color-paper: #ffffff;
 
   /* Typographie */
-  --font-display: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
-  --font-sans: "Manrope Variable", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Fallback", system-ui, sans-serif;
+  --font-sans: "Manrope Variable", "Manrope Fallback", system-ui, sans-serif;
 
   /* Mouvement */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
@@ -35,9 +76,29 @@
   --breakpoint-3xl: 112rem;
 
   --animate-marquee: marquee 42s linear infinite;
+  --animate-word-rise: word-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-settle: settle 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-orbit: orbit 38s linear infinite;
   --animate-orbit-reverse: orbit 52s linear infinite reverse;
 
+  @keyframes word-rise {
+    from { transform: translate3d(0, 108%, 0); }
+    to { transform: translate3d(0, 0, 0); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translate3d(0, 14px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @keyframes settle {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -8px, 0); }
+  }
   @keyframes marquee {
     from { transform: translate3d(0, 0, 0); }
     to { transform: translate3d(-50%, 0, 0); }
@@ -162,6 +223,13 @@
 /* Grain très léger pour les aplats sombres */
 @utility bg-noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+
+/* Sections sous la ligne de flottaison : mise en page et peinture différées jusqu'à leur approche
+   (premier affichage plus rapide sur mobile). La hauteur estimée évite les sauts de défilement. */
+@utility defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 @utility scrollbar-none {

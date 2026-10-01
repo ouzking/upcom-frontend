@@ -23,7 +23,7 @@ export function ProjectCard({ project, large = false, priority = false, classNam
   return (
     <article className={cn("group relative", className)}>
       <Link to={ROUTES.project(project.slug)} className="block rounded-[1.75rem] focus-visible:outline-offset-4">
-        <ImageReveal className="rounded-[1.75rem]">
+        <ImageReveal disabled={priority} className="rounded-[1.75rem]">
           <SmartImage
             src={project.coverUrl}
             alt={project.title}
@@ -44,7 +44,7 @@ export function ProjectCard({ project, large = false, priority = false, classNam
         </span>
         <div className="mt-5 flex items-start justify-between gap-6">
           <div>
-            {project.category ? <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-deep">{project.category.name}</p> : null}
+            {project.category ? <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-ink">{project.category.name}</p> : null}
             <h3 className={cn("mt-2 font-display font-semibold tracking-tight text-ink transition-colors group-hover:text-brand", large ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl")}>
               {project.title}
             </h3>

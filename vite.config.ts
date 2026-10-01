@@ -37,12 +37,28 @@ function supabasePreconnect(mode: string): Plugin {
   };
 }
 
+/** Précharge les deux polices principales (sous-ensemble latin) pour limiter le décalage du rendu du texte. */
+function preloadFonts(): Plugin {
+  return {
+    name: "upcom-preload-fonts",
+    apply: "build",
+    transformIndexHtml: {
+      order: "post",
+      handler(_html, ctx) {
+        return Object.keys(ctx.bundle ?? {})
+          .filter((file) => /(bricolage-grotesque|manrope)-latin-wght-normal-[\w-]+\.woff2$/.test(file))
+          .map((file) => ({ tag: "link", attrs: { rel: "preload", as: "font", type: "font/woff2", href: `/${file}`, crossorigin: "" }, injectTo: "head" as const }));
+      },
+    },
+  };
+}
+
 // https://vite.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command, mode, isSsrBuild }) => {
   if (command === "build" && mode === "production") assertProductionEnv(mode);
 
   return {
-    plugins: [react(), tailwindcss(), supabasePreconnect(mode)],
+    plugins: [react(), tailwindcss(), supabasePreconnect(mode), preloadFonts()],
     resolve: {
       alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
     },
@@ -54,7 +70,8 @@ export default defineConfig(({ command, mode }) => {
           // Bibliothèques stables isolées : meilleur cache navigateur entre deux déploiements.
           // (Framer Motion n'est pas regroupé : ses fonctionnalités sont chargées à la demande par LazyMotion.)
           manualChunks(id: string) {
-            if (!id.includes("node_modules")) return undefined;
+            // Build serveur (pré-rendu) : découpage par défaut.
+            if (isSsrBuild || !id.includes("node_modules")) return undefined;
             if (id.includes("@supabase")) return "supabase";
             if (id.includes("react-router")) return "router";
             if (id.includes("@tanstack")) return "query";

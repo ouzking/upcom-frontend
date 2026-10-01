@@ -68,7 +68,10 @@ export default function ProjectsPage() {
         crumbs={[{ label: "Réalisations" }]}
       />
 
-      <section className="container-page py-16 sm:py-20" aria-label="Liste des réalisations">
+      <section className="container-page py-16 sm:py-20" aria-labelledby="listing-title">
+        <h2 id="listing-title" className="sr-only">
+          {"Toutes les réalisations"}
+        </h2>
         {isPending ? (
           <SkeletonGrid count={6} />
         ) : isError ? (
@@ -103,7 +106,8 @@ export default function ProjectsPage() {
               </div>
             ) : (
               <m.ul layout className="mt-10 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-                <AnimatePresence mode="popLayout">
+                {/* initial={false} : pas d'apparition animée au chargement (cartes visibles dès le HTML pré-rendu). */}
+                <AnimatePresence mode="popLayout" initial={false}>
                   {filtered.map((project, index) => (
                     <m.li
                       key={project.id}

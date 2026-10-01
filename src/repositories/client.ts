@@ -26,7 +26,7 @@ export async function query<Res extends QueryResponse, F>(
   fallback: F,
   run: (client: UpcomClient) => PromiseLike<Res>,
 ): Promise<NonNullable<Res["data"]> | F> {
-  const { data, error } = await run(getSupabase());
+  const { data, error } = await run(await getSupabase());
   if (error) throw new RepositoryError(context, error);
   return (data ?? fallback) as NonNullable<Res["data"]> | F;
 }

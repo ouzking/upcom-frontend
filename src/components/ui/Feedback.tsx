@@ -53,7 +53,7 @@ export function EmptyState({ title, text, action, className, tone = "light" }: E
 export function ErrorState({ onRetry, className }: { onRetry?: () => void; className?: string }) {
   return (
     <div role="alert" className={cn("flex flex-col items-center gap-4 rounded-3xl border border-line bg-white px-6 py-12 text-center", className)}>
-      <AlertTriangle className="size-7 text-accent-deep" aria-hidden="true" />
+      <AlertTriangle className="size-7 text-accent-ink" aria-hidden="true" />
       <p className="max-w-md text-muted">Le contenu n'a pas pu être chargé. Vérifiez votre connexion puis réessayez.</p>
       {onRetry ? (
         <Button variant="outline" onClick={onRetry} icon={<RotateCcw className="size-4" aria-hidden="true" />}>

@@ -1,18 +1,24 @@
 import { Link } from "react-router";
+import logoMedium from "@/assets/brand/logo-upcom-md.webp";
 import logoSmall from "@/assets/brand/logo-upcom-sm.webp";
+import logoTiny from "@/assets/brand/logo-upcom-xs.webp";
 import logo from "@/assets/brand/logo-upcom.webp";
 import mark from "@/assets/brand/mark-upcom.webp";
 import { cn } from "@/lib/cn";
 
 /** Logo officiel UPCOM (version détourée). */
-export function Logo({ className, large = false, eager = false }: { className?: string; large?: boolean; eager?: boolean }) {
+/** `large` : version haute définition, servie en 260 ou 600 px selon la taille affichée (srcset). */
+export function Logo({ className, large = false, eager = false, sizes }: { className?: string; large?: boolean; eager?: boolean; sizes?: string }) {
   return (
     <img
       src={large ? logo : logoSmall}
+      srcSet={large ? `${logoSmall} 260w, ${logoMedium} 420w, ${logo} 600w` : `${logoTiny} 140w, ${logoSmall} 260w`}
+      sizes={large ? (sizes ?? "(min-width: 1024px) 420px, 200px") : (sizes ?? "80px")}
       alt="UPCOM AGENCY & SERVICES"
       width={large ? 600 : 260}
       height={large ? 535 : 232}
       loading={eager ? "eager" : "lazy"}
+      fetchPriority={eager && large ? "high" : undefined}
       decoding="async"
       className={cn("select-none", className)}
       draggable={false}

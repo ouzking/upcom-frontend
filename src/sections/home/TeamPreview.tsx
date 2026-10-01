@@ -27,7 +27,7 @@ export function TeamPreview() {
   const preview = members.slice(0, 4);
 
   return (
-    <section className="bg-mist py-24 sm:py-32 lg:py-40" aria-labelledby="team-title">
+    <section className="defer-render bg-mist py-24 sm:py-32 lg:py-40" aria-labelledby="team-title">
       <div className="container-page">
         <SectionHeading
           index="07"

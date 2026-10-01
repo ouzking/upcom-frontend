@@ -8,7 +8,7 @@ import { telHref } from "@/lib/format";
 export function FormAlert({ message }: { message: string }) {
   return (
     <div role="alert" className="flex gap-3 rounded-2xl border border-accent-deep/30 bg-accent/10 p-4 text-sm text-ink">
-      <AlertCircle className="mt-0.5 size-5 shrink-0 text-accent-deep" aria-hidden="true" />
+      <AlertCircle className="mt-0.5 size-5 shrink-0 text-accent-ink" aria-hidden="true" />
       <div>
         <p className="font-semibold">{message}</p>
         <p className="mt-1 text-ink-soft">
@@ -56,7 +56,7 @@ export function FormSuccess({ title, text, email, actions }: { title: string; te
       <p className="mx-auto mt-4 max-w-md text-muted">{text}</p>
       {actions ? <div className="mt-8 flex flex-wrap justify-center gap-3">{actions}</div> : null}
       <p className="mt-8 inline-flex items-center gap-2 text-sm text-muted">
-        <Phone className="size-4 text-accent-deep" aria-hidden="true" />
+        <Phone className="size-4 text-accent-ink" aria-hidden="true" />
         Besoin urgent ?{" "}
         <a href={telHref(COMPANY.phones[0])} className="font-semibold text-brand">
           {COMPANY.phones[0]}

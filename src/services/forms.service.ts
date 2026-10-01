@@ -46,7 +46,8 @@ const readErrorBody = (value: unknown): ApiErrorBody | null => {
 };
 
 async function invoke<TResult>(name: string, body: object): Promise<TResult> {
-  const { data, error } = await getSupabase().functions.invoke<ApiResponse<TResult>>(name, { body });
+  const client = await getSupabase();
+  const { data, error } = await client.functions.invoke<ApiResponse<TResult>>(name, { body });
 
   if (error) {
     if (error instanceof FunctionsHttpError) {

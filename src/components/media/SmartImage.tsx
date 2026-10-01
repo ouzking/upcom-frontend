@@ -36,6 +36,10 @@ const hash = (value: string): number => [...value].reduce((acc, char) => (acc * 
 export function SmartImage({ src, alt, className, imgClassName, priority = false, sizes, seed = alt, fallbackIcon, fallbackLabel, fallbackText }: SmartImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
+  // Image déjà chargée avant l'hydratation (page pré-rendue) : l'événement load a eu lieu sans React.
+  const imageRef = (node: HTMLImageElement | null) => {
+    if (node?.complete && node.naturalWidth > 0 && !loaded) setLoaded(true);
+  };
 
   if (!src || failed) {
     const theme = FALLBACK_THEMES[hash(seed) % FALLBACK_THEMES.length] ?? FALLBACK_THEMES[0];
@@ -64,6 +68,7 @@ export function SmartImage({ src, alt, className, imgClassName, priority = false
   return (
     <div className={cn("relative overflow-hidden bg-mist", className)}>
       <img
+        ref={imageRef}
         src={src}
         alt={alt}
         sizes={sizes}
@@ -74,7 +79,8 @@ export function SmartImage({ src, alt, className, imgClassName, priority = false
         onError={() => setFailed(true)}
         className={cn(
           "h-full w-full object-cover transition-[opacity,transform,filter] duration-700 ease-premium",
-          loaded ? "opacity-100 blur-0" : "opacity-0 blur-md",
+          // Image prioritaire : visible dès le HTML pré-rendu (LCP) ; les autres apparaissent en fondu.
+          priority || loaded ? "opacity-100 blur-0" : "opacity-0 blur-md",
           imgClassName,
         )}
       />

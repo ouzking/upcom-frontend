@@ -94,14 +94,14 @@ export function ContactForm() {
       <Honeypot value={values.website} onChange={set("website")} />
       <Turnstile onToken={setCaptcha} resetKey={captchaKey} />
       {errors.captcha ? (
-        <p className="text-sm font-medium text-accent-deep" role="alert">
+        <p className="text-sm font-medium text-accent-ink" role="alert">
           {errors.captcha}
         </p>
       ) : null}
       {serverError ? <FormAlert message={serverError} /> : null}
       <div className="flex flex-col-reverse gap-5 pt-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-sm text-xs leading-relaxed text-muted">Vos informations sont utilisées uniquement pour répondre à votre message. <Link to={ROUTES.privacy} className="underline underline-offset-2 hover:text-brand">Politique de confidentialité</Link></p>
-        <Button type="submit" variant="primary" size="lg" disabled={mutation.isPending} icon={<Send className="size-4" aria-hidden="true" />}>
+        <Button type="submit" variant="primary" size="lg" loading={mutation.isPending} icon={<Send className="size-4" aria-hidden="true" />}>
           {mutation.isPending ? "Envoi en cours…" : "Envoyer le message"}
         </Button>
       </div>

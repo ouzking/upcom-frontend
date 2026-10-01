@@ -1,21 +1,29 @@
-import { createBrowserRouter, type RouteObject } from "react-router";
+import type { ComponentType } from "react";
+import type { RouteObject } from "react-router";
 import { RootLayout } from "@/layouts/RootLayout";
+import HomePage from "@/pages/HomePage";
 import { RouteErrorPage } from "@/pages/RouteErrorPage";
 import { SplashScreen } from "@/pages/SplashScreen";
 
 /** Chaque page est un chunk séparé, chargé à la navigation (code splitting). */
-const page = (loader: () => Promise<{ default: React.ComponentType }>): Pick<RouteObject, "lazy"> => ({
+const page = (loader: () => Promise<{ default: ComponentType }>): Pick<RouteObject, "lazy"> => ({
   lazy: async () => ({ Component: (await loader()).default }),
 });
 
-export const router = createBrowserRouter([
+/**
+ * Arbre des routes, partagé par le navigateur (main.tsx) et le pré-rendu au build
+ * (entry-server.tsx).
+ */
+export const routes: RouteObject[] = [
+
   {
     path: "/",
     Component: RootLayout,
     errorElement: <RouteErrorPage />,
     hydrateFallbackElement: <SplashScreen />,
     children: [
-      { index: true, ...page(() => import("@/pages/HomePage")) },
+      // Accueil inclus dans le bundle principal : pas d'aller-retour réseau supplémentaire au premier affichage.
+      { index: true, Component: HomePage },
       { path: "a-propos", ...page(() => import("@/pages/AboutPage")) },
       { path: "services", ...page(() => import("@/pages/ServicesPage")) },
       { path: "services/:expertiseSlug", ...page(() => import("@/pages/ExpertiseDetailPage")) },
@@ -35,4 +43,4 @@ export const router = createBrowserRouter([
       { path: "*", ...page(() => import("@/pages/NotFoundPage")) },
     ],
   },
-]);
+];

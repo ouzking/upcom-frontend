@@ -44,7 +44,7 @@ export default function ServiceDetailPage() {
           description: service.shortDescription ?? undefined,
           serviceType: category?.name,
           url: absoluteUrl(ROUTES.service(expertiseSlug, service.slug)),
-          provider: { "@type": "ProfessionalService", name: COMPANY.name },
+          provider: { "@type": "LocalBusiness", name: COMPANY.name },
         }}
       />
       <PageHero
@@ -66,7 +66,7 @@ export default function ServiceDetailPage() {
 
       <article className="container-page py-20 sm:py-28">
         {service.imageUrl ? (
-          <ImageReveal className="mb-16 rounded-[2rem]">
+          <ImageReveal disabled className="mb-16 rounded-[2rem]">
             <SmartImage src={service.imageUrl} alt={service.title} priority className="aspect-[16/8] rounded-[2rem]" />
           </ImageReveal>
         ) : null}

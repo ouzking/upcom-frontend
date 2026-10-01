@@ -77,7 +77,7 @@ export default function ContactPage() {
           "@type": "ContactPage",
           name: "Contact — UPCOM AGENCY & SERVICES",
           mainEntity: {
-            "@type": "ProfessionalService",
+            "@type": "LocalBusiness",
             name: COMPANY.name,
             address: { "@type": "PostalAddress", streetAddress: site?.address ?? COMPANY.address, addressCountry: "SN" },
             telephone: phones.map((phone) => toE164(phone)),

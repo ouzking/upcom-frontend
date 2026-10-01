@@ -21,7 +21,7 @@ function ExpertiseRow({ expertise, index, services }: { expertise: Expertise; in
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <Reveal className={cn("lg:col-span-5", reversed && "lg:order-2 lg:col-start-8")}>
           <div className="flex items-center gap-4">
-            <span className="font-display text-sm font-semibold tabular-nums text-accent-deep">{String(index + 1).padStart(2, "0")}</span>
+            <span className="font-display text-sm font-semibold tabular-nums text-accent-ink">{String(index + 1).padStart(2, "0")}</span>
             <span className="flex size-12 items-center justify-center rounded-2xl bg-brand text-white">
               <DynamicIcon name={expertise.icon} className="size-5" aria-hidden="true" />
             </span>
@@ -101,7 +101,7 @@ export default function ServicesPage() {
           {expertises?.map((expertise, index) => (
             <li key={expertise.slug} className="shrink-0">
               <a href={`#${expertise.slug}`} className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-ink-soft transition hover:bg-mist hover:text-brand">
-                <span className="text-xs tabular-nums text-accent-deep">{String(index + 1).padStart(2, "0")}</span>
+                <span className="text-xs tabular-nums text-accent-ink">{String(index + 1).padStart(2, "0")}</span>
                 {expertise.shortName}
               </a>
             </li>

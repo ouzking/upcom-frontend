@@ -40,7 +40,7 @@ export function TeamMemberCard({ member, showBio = false, className }: { member:
         ) : null}
       </div>
       <h3 className="mt-5 font-display text-xl font-semibold tracking-tight text-ink">{member.name}</h3>
-      <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-accent-deep">{member.position}</p>
+      <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-accent-ink">{member.position}</p>
       {showBio && member.biography ? <p className="mt-4 text-[0.95rem] leading-relaxed text-muted">{member.biography}</p> : null}
     </article>
   );

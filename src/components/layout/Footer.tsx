@@ -11,7 +11,7 @@ export function Footer() {
   const { data: expertises = [] } = useExpertises();
 
   return (
-    <footer className="relative isolate overflow-hidden bg-brand-night text-white" aria-labelledby="footer-title">
+    <footer className="defer-render relative isolate overflow-hidden bg-brand-night text-white" aria-labelledby="footer-title">
       <div className="absolute inset-0 -z-10 bg-noise" aria-hidden="true" />
       <div className="absolute -right-48 -top-48 -z-10 size-[40rem] rounded-full border border-white/5" aria-hidden="true" />
       <div className="absolute -right-24 -top-24 -z-10 size-[28rem] rounded-full border border-white/5" aria-hidden="true" />
@@ -23,7 +23,7 @@ export function Footer() {
               {site?.companyName}
             </h2>
             <Link to={ROUTES.home} className="inline-block rounded-2xl bg-white p-4" aria-label="UPCOM AGENCY & SERVICES — accueil">
-              <Logo className="h-20 w-auto" />
+              <Logo className="h-20 w-auto" sizes="96px" />
             </Link>
             <p className="mt-8 max-w-sm text-[0.95rem] leading-relaxed text-white/70">{site?.description}</p>
             {site && site.socials.length > 0 ? (

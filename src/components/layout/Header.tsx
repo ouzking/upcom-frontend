@@ -30,7 +30,7 @@ export function Header() {
     <>
       <m.header
         className="fixed inset-x-0 top-0 z-50"
-        initial={{ y: -100 }}
+        initial={false}
         animate={{ y: hidden && !menuOpen ? "-100%" : 0 }}
         transition={{ duration: 0.5, ease: EASE }}
       >

@@ -21,7 +21,7 @@ export function EventCard({ event, past = false, tone = "light", className }: { 
       >
         <time dateTime={event.startsAt} className={cn("flex flex-col font-display leading-none", past && "opacity-60")}>
           <span className={cn("text-4xl font-bold tracking-tight sm:text-5xl", dark ? "text-white" : "text-brand")}>{day}</span>
-          <span className={cn("mt-1 text-xs font-semibold uppercase tracking-[0.18em]", dark ? "text-accent" : "text-accent-deep")}>
+          <span className={cn("mt-1 text-xs font-semibold uppercase tracking-[0.18em]", dark ? "text-accent" : "text-accent-ink")}>
             {month} {year}
           </span>
         </time>

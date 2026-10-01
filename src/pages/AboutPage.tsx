@@ -86,7 +86,7 @@ export default function AboutPage() {
             {VALUES.map((value) => {
               return (
                 <StaggerItem key={value.title} className="group bg-white p-8 transition-colors duration-500 hover:bg-brand lg:min-h-80">
-                  <DynamicIcon name={value.icon} className="size-7 text-accent-deep transition-colors group-hover:text-accent" aria-hidden="true" />
+                  <DynamicIcon name={value.icon} className="size-7 text-accent-ink transition-colors group-hover:text-accent" aria-hidden="true" />
                   <h3 className="mt-10 font-display text-2xl font-semibold tracking-tight text-ink transition-colors group-hover:text-white">{value.title}</h3>
                   <p className="mt-3 leading-relaxed text-muted transition-colors group-hover:text-white/80">{value.text}</p>
                 </StaggerItem>
@@ -108,7 +108,7 @@ export default function AboutPage() {
           <Stagger className="lg:col-span-8" stagger={0.06}>
             {OBJECTIVES.map((objective) => (
               <StaggerItem key={objective} className="flex gap-5 border-b border-line py-5 first:border-t">
-                <span className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-deep">
+                <span className="mt-1 flex size-7 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent-ink">
                   <Check className="size-4" aria-hidden="true" />
                 </span>
                 <p className="text-lg text-ink">{objective}</p>

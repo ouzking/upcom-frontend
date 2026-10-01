@@ -13,6 +13,7 @@ import { Accent, Eyebrow, SectionHeading } from "@/components/ui/Section";
 import { ROUTES } from "@/config/site";
 import { COMPANY } from "@/content/company";
 import { useExpertises, useProjects, useServices } from "@/hooks/queries";
+import { toE164 } from "@/lib/format";
 import NotFoundPage from "./NotFoundPage";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
 
@@ -51,7 +52,7 @@ export default function ExpertiseDetailPage() {
           name: expertise.name,
           description: expertise.description,
           serviceType: expertise.name,
-          provider: { "@type": "ProfessionalService", name: COMPANY.name, telephone: COMPANY.phones[0], address: COMPANY.address },
+          provider: { "@type": "LocalBusiness", name: COMPANY.name, telephone: COMPANY.phones.map((phone) => toE164(phone)), address: COMPANY.address },
           url: absoluteUrl(ROUTES.expertise(expertise.slug)),
           hasOfferCatalog: {
             "@type": "OfferCatalog",
@@ -95,7 +96,7 @@ export default function ExpertiseDetailPage() {
           <Stagger className="grid content-start gap-x-10 sm:grid-cols-2 lg:col-span-8" stagger={0.05}>
             {expertise.offerings.map((offering) => (
               <StaggerItem key={offering} className="flex items-start gap-4 border-b border-line py-5">
-                <Check className="mt-1 size-5 shrink-0 text-accent-deep" aria-hidden="true" />
+                <Check className="mt-1 size-5 shrink-0 text-accent-ink" aria-hidden="true" />
                 <span className="text-lg font-medium text-ink">{offering}</span>
               </StaggerItem>
             ))}

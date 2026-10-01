@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link } from "react-router";
 import { PageHero } from "@/components/layout/PageHero";
 import { Seo } from "@/components/seo/Seo";
@@ -7,10 +8,17 @@ import { telHref } from "@/lib/format";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 /**
- * Mentions légales. Seules les informations communiquées par UPCOM figurent ici ;
- * les identifiants légaux (RCCM, NINEA, responsable de la publication) sont à
- * ajouter dès qu'ils sont fournis.
+ * Mentions légales : seules les informations communiquées par UPCOM figurent ici.
+ * Identifiants légaux à renseigner dès qu'UPCOM les fournit (aucune valeur inventée) ;
+ * tant que `value` est null, la mention « À compléter par UPCOM » est affichée.
  */
+const LEGAL_FIELDS: { label: string; value: string | null }[] = [
+  { label: "Forme juridique", value: null },
+  { label: "RCCM", value: null },
+  { label: "NINEA", value: null },
+  { label: "Directeur de la publication", value: null },
+];
+
 export default function LegalNoticePage() {
   const { data: site } = useSiteInfo();
 
@@ -41,6 +49,14 @@ export default function LegalNoticePage() {
               </>
             ) : null}
           </p>
+          <dl className="grid gap-x-8 gap-y-3 rounded-2xl border border-line p-6 text-[0.95rem] sm:grid-cols-[auto_1fr]">
+            {LEGAL_FIELDS.map((field) => (
+              <Fragment key={field.label}>
+                <dt className="font-semibold text-ink">{field.label}</dt>
+                <dd className={field.value ? "text-ink-soft" : "text-muted"}>{field.value ?? "À compléter par UPCOM"}</dd>
+              </Fragment>
+            ))}
+          </dl>
 
           <h2>Hébergement</h2>
           <p>

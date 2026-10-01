@@ -12,7 +12,7 @@ export function FeaturedProjects() {
   const selection = projects?.slice(0, 4) ?? [];
 
   return (
-    <section className="py-24 sm:py-32 lg:py-40" aria-labelledby="projects-title">
+    <section className="defer-render py-24 sm:py-32 lg:py-40" aria-labelledby="projects-title">
       <div className="container-page">
         <SectionHeading
           index="05"

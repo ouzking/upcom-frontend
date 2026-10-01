@@ -8,7 +8,7 @@ import { DynamicIcon } from "@/components/ui/DynamicIcon";
 /** Engagements d'UPCOM (issus du cahier des charges) — aucun chiffre inventé. */
 export function WhyUpcom({ index = "06" }: { index?: string }) {
   return (
-    <section className="relative border-t border-line py-24 sm:py-32 lg:py-40" aria-labelledby="why-title">
+    <section className="defer-render relative border-t border-line py-24 sm:py-32 lg:py-40" aria-labelledby="why-title">
       <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <Reveal className="lg:sticky lg:top-32">

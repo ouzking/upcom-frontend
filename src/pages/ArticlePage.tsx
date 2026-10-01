@@ -110,7 +110,7 @@ export default function ArticlePage() {
           <Breadcrumbs items={[{ label: "Actualités", to: ROUTES.news }, { label: article.title }]} />
           <Reveal y={12} className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
             {article.category ? (
-              <Link to={`${ROUTES.news}?categorie=${article.category.slug}`} className="rounded-full bg-accent/15 px-3 py-1 font-semibold text-accent-deep transition hover:bg-accent/25">
+              <Link to={`${ROUTES.news}?categorie=${article.category.slug}`} className="rounded-full bg-accent/15 px-3 py-1 font-semibold text-accent-ink transition hover:bg-accent/25">
                 {article.category.name}
               </Link>
             ) : null}
@@ -137,7 +137,7 @@ export default function ArticlePage() {
 
         {article.coverUrl ? (
           <div className="container-page max-w-6xl">
-            <ImageReveal className="rounded-[2rem]">
+            <ImageReveal disabled className="rounded-[2rem]">
               <SmartImage src={article.coverUrl} alt={article.title} priority className="aspect-[16/9] rounded-[2rem]" sizes="(min-width: 1280px) 1150px, 100vw" />
             </ImageReveal>
           </div>

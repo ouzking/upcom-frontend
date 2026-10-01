@@ -16,7 +16,7 @@ export function ArticleCard({ article, variant = "default", className }: { artic
           <SmartImage src={article.coverUrl} alt="" seed={article.id} className="aspect-square rounded-2xl" imgClassName="group-hover:scale-105" />
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-              {article.category?.name ? <span className="text-accent-deep">{article.category.name} · </span> : null}
+              {article.category?.name ? <span className="text-accent-ink">{article.category.name} · </span> : null}
               {date}
             </p>
             <h3 className="mt-2 line-clamp-2 font-display text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-brand">
@@ -37,13 +37,14 @@ export function ArticleCard({ article, variant = "default", className }: { artic
           alt=""
           seed={article.id}
           fallbackLabel={article.category?.name}
+          priority={feature}
           className={cn("rounded-[1.75rem]", feature ? "aspect-[16/10] lg:col-span-7" : "aspect-[16/11]")}
           imgClassName="group-hover:scale-[1.04]"
           sizes={feature ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
         />
         <div className={cn(feature ? "lg:col-span-5" : "mt-6")}>
           <p className="flex flex-wrap items-center gap-x-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-            {article.category ? <span className="text-accent-deep">{article.category.name}</span> : null}
+            {article.category ? <span className="text-accent-ink">{article.category.name}</span> : null}
             {date}
           </p>
           <h3 className={cn("mt-3 font-display font-semibold tracking-tight text-ink transition-colors group-hover:text-brand", feature ? "text-display-sm" : "text-xl leading-snug sm:text-2xl")}>

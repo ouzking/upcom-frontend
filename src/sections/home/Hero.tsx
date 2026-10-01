@@ -56,18 +56,16 @@ export function Hero() {
 
       <div className="container-page grid flex-1 items-center gap-14 pb-16 lg:grid-cols-12 lg:gap-6 lg:pb-10">
         <m.div className="lg:col-span-7" style={{ opacity: copyOpacity }}>
-          <m.p
-            className="flex items-center gap-4 text-[0.78rem] font-semibold uppercase tracking-[0.24em] text-brand"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+          <p
+            className="animate-fade-up flex items-center gap-4 text-[0.78rem] font-semibold uppercase tracking-[0.24em] text-brand"
+            style={{ animationDelay: "0.1s" }}
           >
             <Slashes className="h-3" />
             {COMPANY.name}
-          </m.p>
+          </p>
 
           <h1 id="hero-title" className="mt-7 text-display-xl text-ink">
-            <SplitWords text="Donner de la valeur à votre image." accentWords={["image"]} accentClassName="text-brand" immediate delay={0.2} />
+            <SplitWords text="Donner de la valeur à votre image." accentWords={["image"]} accentClassName="text-brand" immediate delay={0.05} />
           </h1>
 
           {/* Trait orange : écho à la trajectoire du logo */}
@@ -89,20 +87,16 @@ export function Hero() {
             </defs>
           </svg>
 
-          <m.p
-            className="mt-8 max-w-xl text-lead text-muted"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}
+          <p
+            className="animate-fade-up mt-8 max-w-xl text-lead text-muted"
+            style={{ animationDelay: "0.3s" }}
           >
             {COMPANY.description}
-          </m.p>
+          </p>
 
-          <m.div
-            className="mt-10 flex flex-col gap-3 sm:flex-row"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.85 }}
+          <div
+            className="animate-fade-up mt-10 flex flex-col gap-3 sm:flex-row"
+            style={{ animationDelay: "0.4s" }}
           >
             <ButtonLink to={PRIMARY_CTA.to} variant="accent" size="lg" arrow>
               {PRIMARY_CTA.label}
@@ -110,18 +104,15 @@ export function Hero() {
             <a href="#expertises" className={buttonClasses({ variant: "outline", size: "lg" })}>
               Découvrir nos expertises
             </a>
-          </m.div>
+          </div>
         </m.div>
 
         {/* Composition : logo, orbites, repères métiers */}
         <m.div
           className="relative mx-auto w-full max-w-[34rem] lg:col-span-5 lg:max-w-none"
           style={{ y: visualY }}
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
         >
-          <div className="relative aspect-square">
+          <div className="relative aspect-square animate-settle">
             <m.div className="absolute inset-[-6%]" style={{ x: orbitX, y: orbitY }}>
               <Orbits className="absolute inset-0" />
             </m.div>
@@ -130,28 +121,22 @@ export function Hero() {
               aria-hidden="true"
             />
             <m.div className="absolute inset-[24%] flex items-center justify-center" style={{ x: logoX, y: logoY }}>
-              <Logo large eager className="h-auto w-full drop-shadow-[0_18px_30px_rgba(1,53,146,0.18)]" />
+              <Logo large eager className="h-auto w-full" />
             </m.div>
 
             {FLOATING.map(({ label, icon: Icon, className, delay }, index) => (
-              <m.div
-                key={label}
-                className={cn("absolute hidden sm:block", className)}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, ease: EASE, delay }}
-              >
-                <m.div
-                  className="flex items-center gap-2.5 rounded-full border border-white bg-white/80 py-2 pl-2 pr-4 text-sm font-semibold text-ink shadow-[0_12px_32px_-12px_rgba(10,22,51,0.28)] backdrop-blur-md"
-                  animate={reduceMotion ? undefined : { y: [0, -8, 0] }}
-                  transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut" }}
+              <div key={label} className={cn("absolute hidden animate-fade-up sm:block", className)} style={{ animationDelay: `${delay - 0.5}s` }}>
+                {/* Flottement en CSS (composité par le navigateur, sans travail JavaScript à chaque image). */}
+                <div
+                  className="flex animate-float items-center gap-2.5 rounded-full border border-white bg-white/90 py-2 pl-2 pr-4 text-sm font-semibold text-ink shadow-[0_12px_32px_-12px_rgba(10,22,51,0.28)]"
+                  style={{ animationDuration: `${5 + index}s` }}
                 >
                   <span className={cn("flex size-8 items-center justify-center rounded-full", index === 1 ? "bg-accent text-ink" : "bg-brand text-white")}>
                     <Icon className="size-4" aria-hidden="true" />
                   </span>
                   {label}
-                </m.div>
-              </m.div>
+                </div>
+              </div>
             ))}
           </div>
         </m.div>
@@ -190,7 +175,7 @@ function ExpertiseMarquee() {
   );
 
   return (
-    <div className="group relative border-y border-line bg-white/80 py-5 backdrop-blur" aria-label="Nos six pôles d'expertise">
+    <div className="group relative border-y border-line bg-white py-5" aria-label="Nos six pôles d'expertise">
       <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
         {row(false)}
         {row(true)}

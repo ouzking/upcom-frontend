@@ -19,7 +19,7 @@ export function NewsEvents() {
   const [lead, ...others] = articles;
 
   return (
-    <section className="py-24 sm:py-32 lg:py-40" aria-labelledby="news-title">
+    <section className="defer-render py-24 sm:py-32 lg:py-40" aria-labelledby="news-title">
       <div className="container-page">
         <SectionHeading
           index="08"

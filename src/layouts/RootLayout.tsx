@@ -1,6 +1,8 @@
 import { AnimatePresence, m } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation, useNavigation } from "react-router";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { Header } from "@/components/layout/Header";
 import { EASE } from "@/components/motion/variants";
 
@@ -24,8 +26,18 @@ function NavigationProgress() {
   );
 }
 
+/**
+ * Pas d'animation d'entrée au premier affichage : la page pré-rendue doit être
+ * visible immédiatement. Les navigations suivantes bénéficient de la transition.
+ */
+let hasNavigated = false;
+
 export function RootLayout() {
   const { pathname } = useLocation();
+  const [animateEntry] = useState(() => hasNavigated);
+  useEffect(() => {
+    hasNavigated = true;
+  }, [pathname]);
 
   return (
     <>
@@ -42,13 +54,14 @@ export function RootLayout() {
         id="contenu"
         tabIndex={-1}
         className="min-h-[70vh] outline-none"
-        initial={{ opacity: 0, y: 12 }}
+        initial={animateEntry ? { opacity: 0, y: 12 } : false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: EASE }}
       >
         <Outlet />
       </m.main>
       <Footer />
+      <WhatsAppButton />
       <ScrollRestoration />
     </>
   );

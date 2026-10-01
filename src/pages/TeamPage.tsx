@@ -37,7 +37,10 @@ export default function TeamPage() {
         crumbs={[{ label: "Équipe" }]}
       />
 
-      <section className="container-page py-20 sm:py-28" aria-label="Membres de l'équipe">
+      <section className="container-page py-20 sm:py-28" aria-labelledby="listing-title">
+        <h2 id="listing-title" className="sr-only">
+          {"Les membres de l'équipe"}
+        </h2>
         {isPending ? (
           <SkeletonGrid count={4} className="lg:grid-cols-4" itemClassName="aspect-[4/5]" />
         ) : isError ? (

@@ -50,7 +50,9 @@ export function StaggerItem({ children, ...props }: HTMLMotionProps<"div">) {
  * L'observation du viewport se fait sur un conteneur non découpé : Chrome exclut
  * de l'IntersectionObserver un élément entièrement masqué par `clip-path`.
  */
-export function ImageReveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+export function ImageReveal({ children, className, delay = 0, disabled = false }: { children: ReactNode; className?: string; delay?: number; disabled?: boolean }) {
+  // `disabled` : image au-dessus de la ligne de flottaison, affichée sans effet (meilleur LCP).
+  if (disabled) return <div className={cn("relative overflow-hidden", className)}>{children}</div>;
   return (
     <m.div initial="hidden" whileInView="visible" viewport={VIEWPORT} className={className}>
       <m.div
@@ -88,15 +90,32 @@ const stripPunctuation = (word: string) => word.replace(/[.,;:!?«»"]/g, "").to
 export function SplitWords({ text, accentWords = [], accentClassName, className, delay = 0, immediate = false }: SplitWordsProps) {
   const accents = new Set(accentWords.map((word) => word.toLowerCase()));
   const words = text.split(" ");
-  const trigger = immediate ? { animate: "visible" } : { whileInView: "visible", viewport: VIEWPORT };
+
+  // Titres de haut de page : animation CSS déclenchée dès le premier rendu, sans
+  // attendre le chargement de Framer Motion (meilleur LCP sur mobile).
+  if (immediate) {
+    return (
+      <span className={cn("block", className)}>
+        <span className="sr-only">{text}</span>
+        {words.map((word, index) => (
+          <Fragment key={`${word}-${index}`}>
+            <span aria-hidden="true" className="inline-block overflow-hidden pb-[0.14em] mb-[-0.14em] align-bottom">
+              <span
+                className={cn("inline-block animate-word-rise", accents.has(stripPunctuation(word)) && accentClassName)}
+                style={{ animationDelay: `${delay + index * 0.04}s` }}
+              >
+                {word}
+              </span>
+            </span>
+            {index < words.length - 1 ? " " : null}
+          </Fragment>
+        ))}
+      </span>
+    );
+  }
 
   return (
-    <m.span
-      className={cn("block", className)}
-      initial="hidden"
-      {...trigger}
-      variants={staggerContainer(0.07, delay)}
-    >
+    <m.span className={cn("block", className)} initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={staggerContainer(0.07, delay)}>
       <span className="sr-only">{text}</span>
       {words.map((word, index) => (
         <Fragment key={`${word}-${index}`}>

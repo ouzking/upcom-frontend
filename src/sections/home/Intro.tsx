@@ -8,7 +8,7 @@ import { AUDIENCES, MISSION, PRESENTATION } from "@/content/agency";
 
 /** Mot dont l'opacité suit la progression du défilement. */
 function ScrollWord({ word, progress, range }: { word: string; progress: MotionValue<number>; range: [number, number] }) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
+  const opacity = useTransform(progress, range, [0.5, 1]);
   return (
     <>
       <m.span style={{ opacity }}>{word}</m.span>{" "}
@@ -35,7 +35,7 @@ function ScrollText({ text }: { text: string }) {
 
 export function Intro() {
   return (
-    <section id="agence" className="relative py-24 sm:py-32 lg:py-40" aria-labelledby="intro-title">
+    <section id="agence" className="defer-render relative py-24 sm:py-32 lg:py-40" aria-labelledby="intro-title">
       <div className="container-page grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-3">
           <Reveal>
@@ -51,7 +51,7 @@ export function Intro() {
 
           <div className="mt-16 grid gap-12 border-t border-line pt-12 md:grid-cols-2 md:gap-16 lg:mt-24">
             <Reveal>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-deep">Notre vocation</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-ink">Notre vocation</h3>
               <p className="mt-5 text-lg leading-relaxed text-ink-soft">{MISSION}</p>
               <TextLink to={ROUTES.about} className="mt-8">
                 Découvrir l'agence
@@ -60,7 +60,7 @@ export function Intro() {
 
             <div>
               <Reveal>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-deep">Pour qui ?</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-ink">Pour qui ?</h3>
               </Reveal>
               <Stagger className="mt-5 grid sm:grid-cols-2 sm:gap-x-8" stagger={0.05}>
                 {AUDIENCES.map((audience, index) => (

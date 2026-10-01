@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, LoaderCircle } from "lucide-react";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import { Link, type LinkProps } from "react-router";
 import { cn } from "@/lib/cn";
@@ -41,10 +41,22 @@ export function ButtonAnchor({ variant, size, arrow, icon, className, children, 
   );
 }
 
-export function Button({ variant, size, arrow, icon, className, children, type = "button", ...props }: StyleProps & ButtonHTMLAttributes<HTMLButtonElement>) {
+/** Bouton ; `loading` le désactive et remplace l'icône par un indicateur de chargement. */
+export function Button({
+  variant,
+  size,
+  arrow,
+  icon,
+  loading = false,
+  className,
+  children,
+  type = "button",
+  disabled,
+  ...props
+}: StyleProps & ButtonHTMLAttributes<HTMLButtonElement> & { loading?: boolean }) {
   return (
-    <button type={type} className={buttonClasses({ variant, size }, className)} {...props}>
-      <Content arrow={arrow} icon={icon}>
+    <button type={type} className={buttonClasses({ variant, size }, className)} disabled={disabled || loading} aria-busy={loading || undefined} {...props}>
+      <Content arrow={arrow && !loading} icon={loading ? <LoaderCircle className="size-4 animate-spin" aria-hidden="true" /> : icon}>
         {children}
       </Content>
     </button>

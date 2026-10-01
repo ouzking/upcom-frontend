@@ -56,7 +56,10 @@ export default function NewsPage() {
         <NewsTabs />
       </PageHero>
 
-      <section className="container-page py-16 sm:py-20" aria-label="Liste des actualités">
+      <section className="container-page py-16 sm:py-20" aria-labelledby="listing-title">
+        <h2 id="listing-title" className="sr-only">
+          {"Tous les articles"}
+        </h2>
         <div className="flex flex-col gap-5 border-b border-line pb-8 lg:flex-row lg:items-center lg:justify-between">
           {categories.length > 0 ? <FilterPills label="Catégories" options={categoryOptions} value={categorySlug} onChange={(value) => update("categorie", value)} /> : <span />}
           <SearchInput label="Rechercher une actualité" placeholder="Rechercher un article…" value={search} onChange={(value) => update("q", value)} />

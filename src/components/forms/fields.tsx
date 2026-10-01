@@ -22,7 +22,7 @@ function FieldShell({ id, label, required, hint, error, className, children }: F
         <span>
           {label}
           {required ? (
-            <span className="ml-1 text-accent-deep" aria-hidden="true">
+            <span className="ml-1 text-accent-ink" aria-hidden="true">
               *
             </span>
           ) : (
@@ -37,7 +37,7 @@ function FieldShell({ id, label, required, hint, error, className, children }: F
         </p>
       ) : null}
       {error ? (
-        <p id={`${id}-error`} className="mt-2 text-sm font-medium text-accent-deep" role="alert">
+        <p id={`${id}-error`} className="mt-2 text-sm font-medium text-accent-ink" role="alert">
           {error}
         </p>
       ) : null}
@@ -118,7 +118,7 @@ export function ChoiceGroup({ legend, name, choices, value, onChange, error, hin
       <legend className="mb-3 text-sm font-semibold text-ink">
         {legend}
         {required ? (
-          <span className="ml-1 text-accent-deep" aria-hidden="true">
+          <span className="ml-1 text-accent-ink" aria-hidden="true">
             *
           </span>
         ) : (
@@ -156,7 +156,7 @@ export function ChoiceGroup({ legend, name, choices, value, onChange, error, hin
         </p>
       ) : null}
       {error ? (
-        <p id={`${id}-error`} className="mt-2 text-sm font-medium text-accent-deep" role="alert">
+        <p id={`${id}-error`} className="mt-2 text-sm font-medium text-accent-ink" role="alert">
           {error}
         </p>
       ) : null}

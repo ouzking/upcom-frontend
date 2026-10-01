@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 /** Méthode en quatre temps, reliée par une ligne qui se trace au défilement. */
 export function Approach({ index = "04", className }: { index?: string; className?: string }) {
   return (
-    <section className={cn("relative isolate overflow-hidden bg-mist py-24 sm:py-32 lg:py-40", className)} aria-labelledby="approach-title">
+    <section className={cn("defer-render relative isolate overflow-hidden bg-mist py-24 sm:py-32 lg:py-40", className)} aria-labelledby="approach-title">
       <div className="absolute inset-0 -z-10 bg-grid opacity-60 [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]" aria-hidden="true" />
       <div className="container-page">
         <SectionHeading

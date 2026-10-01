@@ -78,7 +78,7 @@ export default function ProjectDetailPage() {
         </header>
 
         <div className="container-page">
-          <ImageReveal className="rounded-[2rem]">
+          <ImageReveal disabled className="rounded-[2rem]">
             <SmartImage
               src={project.coverUrl}
               alt={project.title}

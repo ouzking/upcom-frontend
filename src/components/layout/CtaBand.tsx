@@ -23,7 +23,7 @@ export function CtaBand({
   const phone = site?.phones[0];
 
   return (
-    <section className="container-page py-20 sm:py-28" aria-labelledby="cta-title">
+    <section className="defer-render container-page py-20 sm:py-28" aria-labelledby="cta-title">
       <div className="relative isolate overflow-hidden rounded-[2rem] bg-gradient-brand px-6 py-16 text-white sm:rounded-[2.5rem] sm:px-14 sm:py-20 lg:px-20 lg:py-24">
         <div className="absolute inset-0 -z-10 bg-noise" aria-hidden="true" />
         <Orbits tone="dark" className="absolute -right-32 -top-40 -z-10 size-[42rem] opacity-80" />

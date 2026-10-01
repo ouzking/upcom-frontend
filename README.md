@@ -33,7 +33,7 @@ affiche le contenu officiel embarqué et des états vides soignés.
 | Script | Rôle |
 |---|---|
 | `npm run dev` | Serveur de développement |
-| `npm run build` | Typecheck + build de production, puis génération de `sitemap.xml` et `robots.txt` |
+| `npm run build` | Typecheck, build client, build serveur, **pré-rendu** de toutes les pages publiques, puis `sitemap.xml` et `robots.txt` |
 | `npm run preview` | Prévisualisation du build |
 | `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
 | `npm run brand:assets` | Régénère logo détouré, favicon et image Open Graph depuis `brand/logo-upcom-source.jpeg` |
@@ -150,16 +150,41 @@ Hypothèses à confirmer :
 - **Accessibilité** : HTML sémantique, lien d'évitement, focus visible, menu et visionneuse avec focus piégé
   et touche Échap, libellés ARIA, contrastes AA (texte navy sur orange).
 
-## SEO
+## SEO et pré-rendu
 
-- Title, description, canonical, Open Graph et Twitter par page (`components/seo/Seo.tsx`).
-- JSON-LD : `ProfessionalService` (index.html), `WebSite`, `Service`, `CreativeWork`, `Article`, `Event`,
-  `ContactPage`, `BreadcrumbList`.
-- `sitemap.xml` et `robots.txt` générés au build à partir des contenus publiés (`scripts/generate-seo-files.mjs`).
-- Le site est une SPA : pour un référencement optimal des pages dynamiques, un pré-rendu (ou un rendu
-  serveur) pourra être ajouté ultérieurement.
+- **Pré-rendu au build** (`src/entry-server.tsx`, `scripts/prerender.mjs`) : chaque page publique — pages fixes
+  et pages de chaque contenu publié (services, réalisations, actualités, événements) — est générée en HTML
+  complet, avec ses données, puis « hydratée » par React dans le navigateur. Affichage immédiat, et chaque URL
+  porte ses propres title, description, canonical, Open Graph / Twitter et JSON-LD (aperçus de liens WhatsApp,
+  Facebook, LinkedIn corrects).
+- Fichiers « à plat » (`a-propos.html`…) : Netlify les sert sans redirection vers une URL à barre oblique finale.
+  Les autres URLs servent `app.html` (l'application), qui affiche le contenu ou la page 404.
+- JSON-LD : `LocalBusiness` (informations officielles uniquement, téléphones au format +221), `WebSite`,
+  `Service`, `CreativeWork`, `Article`, `Event`, `ContactPage`, `BreadcrumbList`.
+- `sitemap.xml` (tous les slugs publiés) et `robots.txt` générés au build.
+
+> **À savoir** : un contenu publié depuis le back-office *après* un build est immédiatement visible sur le site
+> (via l'application), mais n'obtient sa page HTML pré-rendue et son entrée dans le sitemap qu'au build suivant.
+> Relancer un build/déploiement après des publications importantes (ou automatiser via un *build hook* Netlify).
+
+## Performance et accessibilité
+
+- Page d'accueil dans le bundle principal, autres pages en chunks ; supabase-js chargé à la demande.
+- CSS intégrée aux pages pré-rendues ; polices principales préchargées, avec polices de repli calibrées
+  (`size-adjust`) pour éviter tout décalage de mise en page à leur chargement.
+- Hydratation après le premier affichage ; animations d'entrée du haut de page en CSS ; sections sous la ligne
+  de flottaison en `content-visibility: auto`.
+- Contrastes AA (orange de texte `accent-ink` #C23A00), hiérarchie de titres, focus visible, navigation clavier,
+  `prefers-reduced-motion` respecté.
+
+## Anti-robot (Cloudflare Turnstile) — prêt, non activé
+
+Le widget s'affiche et le jeton est envoyé dans `captcha_token` dès que `VITE_TURNSTILE_SITE_KEY` est défini.
+Pour l'activer : clé de site dans Netlify (`VITE_TURNSTILE_SITE_KEY`) + `TURNSTILE_SECRET_KEY` dans les secrets
+des Edge Functions, puis rebuild. La CSP autorise déjà `https://challenges.cloudflare.com`.
 
 ## Déploiement
 
-Hébergement **Netlify** : `netlify.toml` (build, Node 22, réécriture SPA) et `public/_headers` (sécurité, CSP, cache).
+Hébergement **Netlify** : `netlify.toml` (build, Node 22, repli vers `app.html`), `public/_redirects` et `public/_headers`
+(HSTS, nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, CSP limitée au projet Supabase et à Cloudflare, cache).
 Définir `VITE_SUPABASE_URL` et `VITE_SUPABASE_PUBLISHABLE_KEY` dans Netlify : le build de production échoue si elles manquent ou pointent vers une adresse locale.

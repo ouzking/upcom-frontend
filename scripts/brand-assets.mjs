@@ -37,6 +37,8 @@ await mkdir(ASSETS, { recursive: true });
 const transparent = await whiteToAlpha(SOURCE);
 const logo = await sharp(transparent).trim({ threshold: 1 }).png().toBuffer();
 await sharp(logo).resize({ width: 600 }).webp({ quality: 78, alphaQuality: 85 }).toFile(`${ASSETS}/logo-upcom.webp`);
+await sharp(logo).resize({ width: 420 }).webp({ quality: 78, alphaQuality: 85 }).toFile(`${ASSETS}/logo-upcom-md.webp`);
+await sharp(logo).resize({ width: 140 }).webp({ quality: 85, alphaQuality: 90 }).toFile(`${ASSETS}/logo-upcom-xs.webp`);
 await sharp(logo).resize({ width: 260 }).webp({ quality: 85, alphaQuality: 90 }).toFile(`${ASSETS}/logo-upcom-sm.webp`);
 await sharp(logo).resize({ width: 1200 }).png({ compressionLevel: 9 }).toFile("brand/logo-upcom-transparent.png");
 
@@ -61,6 +63,15 @@ const square = (size, background) =>
 await square(32, { r: 0, g: 0, b: 0, alpha: 0 }).toFile(`${PUBLIC}/favicon-32.png`);
 await square(180, { r: 255, g: 255, b: 255, alpha: 1 }).toFile(`${PUBLIC}/apple-touch-icon.png`);
 await square(512, { r: 255, g: 255, b: 255, alpha: 1 }).toFile(`${PUBLIC}/icon-512.png`);
+await square(192, { r: 255, g: 255, b: 255, alpha: 1 }).toFile(`${PUBLIC}/icon-192.png`);
+
+// Icône « maskable » (Android) : monogramme dans la zone de sécurité (≈ 60 %), fond blanc.
+await sharp(mark)
+  .resize({ width: 308, height: 308, fit: "contain", background: { r: 255, g: 255, b: 255, alpha: 0 } })
+  .extend({ top: 102, bottom: 102, left: 102, right: 102, background: { r: 255, g: 255, b: 255, alpha: 1 } })
+  .flatten({ background: "#FFFFFF" })
+  .png()
+  .toFile(`${PUBLIC}/icon-maskable-512.png`);
 
 // Image Open Graph : fond blanc, logo centré, bandeau bleu → orange en pied.
 const W = 1200, H = 630;

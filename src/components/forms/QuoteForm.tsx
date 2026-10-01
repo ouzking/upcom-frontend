@@ -162,7 +162,7 @@ export function QuoteForm({ initialNeed = "", initialServiceId = "" }: QuoteForm
   return (
     <form onSubmit={onSubmit} noValidate className="relative space-y-14" aria-describedby="quote-required-note">
       <p id="quote-required-note" className="text-sm text-muted">
-        Les champs marqués d'un <span className="text-accent-deep">*</span> sont obligatoires.
+        Les champs marqués d'un <span className="text-accent-ink">*</span> sont obligatoires.
       </p>
 
       <section aria-labelledby="quote-step-1">
@@ -222,7 +222,7 @@ export function QuoteForm({ initialNeed = "", initialServiceId = "" }: QuoteForm
       <div className="space-y-6 border-t border-line pt-10">
         <Turnstile onToken={setCaptcha} resetKey={captchaKey} />
         {errors.captcha ? (
-          <p className="text-sm font-medium text-accent-deep" role="alert">
+          <p className="text-sm font-medium text-accent-ink" role="alert">
             {errors.captcha}
           </p>
         ) : null}
@@ -231,7 +231,7 @@ export function QuoteForm({ initialNeed = "", initialServiceId = "" }: QuoteForm
           <p className="max-w-md text-xs leading-relaxed text-muted">
             Vos informations sont utilisées uniquement pour traiter votre demande et ne sont jamais cédées à des tiers. <Link to={ROUTES.privacy} className="underline underline-offset-2 hover:text-brand">Politique de confidentialité</Link>
           </p>
-          <Button type="submit" variant="accent" size="lg" disabled={mutation.isPending} icon={<Send className="size-4" aria-hidden="true" />}>
+          <Button type="submit" variant="accent" size="lg" loading={mutation.isPending} icon={<Send className="size-4" aria-hidden="true" />}>
             {mutation.isPending ? "Envoi en cours…" : "Envoyer ma demande"}
           </Button>
         </div>

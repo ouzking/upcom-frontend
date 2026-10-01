@@ -6,7 +6,7 @@ import { CtaBand } from "@/components/layout/CtaBand";
 import { NewsTabs } from "@/components/layout/NewsTabs";
 import { PageHero } from "@/components/layout/PageHero";
 import { SmartImage } from "@/components/media/SmartImage";
-import { ImageReveal, Reveal } from "@/components/motion/primitives";
+import { ImageReveal } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { EmptyState, ErrorState, Skeleton } from "@/components/ui/Feedback";
@@ -20,9 +20,9 @@ import type { EventItem } from "@/types/domain";
 function FeaturedEvent({ event }: { event: EventItem }) {
   const { day, month, year } = dateParts(event.startsAt);
   return (
-    <Reveal>
+    <div>
       <Link to={ROUTES.event(event.slug)} className="group grid overflow-hidden rounded-[2rem] bg-brand-night text-white lg:grid-cols-12">
-        <ImageReveal className="lg:col-span-7">
+        <ImageReveal disabled className="lg:col-span-7">
           <SmartImage src={event.coverUrl} alt="" seed={event.id} fallbackIcon="calendar-range" className="aspect-[16/10] h-full" imgClassName="group-hover:scale-[1.03]" priority />
         </ImageReveal>
         <div className="flex flex-col justify-between gap-10 p-8 sm:p-12 lg:col-span-5">
@@ -50,7 +50,7 @@ function FeaturedEvent({ event }: { event: EventItem }) {
           </div>
         </div>
       </Link>
-    </Reveal>
+    </div>
   );
 }
 

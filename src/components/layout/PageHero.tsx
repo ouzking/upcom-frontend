@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
-import { Reveal, SplitWords } from "@/components/motion/primitives";
+import { SplitWords } from "@/components/motion/primitives";
 import { Orbits } from "@/components/ui/Brand";
 import { Eyebrow } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
@@ -58,16 +58,17 @@ export function PageHero({ eyebrow, title, accentWords, intro, crumbs, children,
       <Orbits className="absolute -right-40 -top-32 -z-10 hidden size-[40rem] opacity-70 md:block" />
       <div className="container-page">
         <Breadcrumbs items={crumbs} />
-        <Reveal className="mt-10" y={16}>
+        {/* Animations CSS : contenu visible dès l'affichage de la page pré-rendue (sans attendre le JavaScript). */}
+        <div className="mt-10 animate-fade-up">
           <Eyebrow>{eyebrow}</Eyebrow>
-        </Reveal>
+        </div>
         <h1 className="mt-6 max-w-5xl text-display-lg text-ink">
           <SplitWords text={title} accentWords={accentWords} accentClassName="text-brand" immediate delay={0.1} />
         </h1>
         {intro ? (
-          <Reveal delay={0.35} className="mt-8 max-w-2xl text-lead text-muted">
+          <div className="mt-8 max-w-2xl animate-fade-up text-lead text-muted" style={{ animationDelay: "0.2s" }}>
             {intro}
-          </Reveal>
+          </div>
         ) : null}
         {children}
       </div>

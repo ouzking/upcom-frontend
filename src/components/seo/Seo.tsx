@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { COMPANY } from "@/content/company";
-import { absoluteUrl as absolute } from "@/lib/seo";
+import { absoluteUrl as absolute, SeoCollectorContext, type PageMeta } from "@/lib/seo";
 
 export interface SeoProps {
   /** Titre de la page (le nom de l'agence est ajouté automatiquement). */
@@ -61,18 +61,29 @@ function setJsonLd(serialized: string | null): void {
  */
 export function Seo({ title, description = COMPANY.description, image, type = "website", noindex = false, jsonLd = null, publishedTime }: SeoProps) {
   const { pathname } = useLocation();
-  // Sérialisé : les pages peuvent passer un objet recréé à chaque rendu sans relancer l'effet.
-  const jsonLdString = jsonLd ? JSON.stringify({ "@context": "https://schema.org", ...jsonLd }) : null;
+  const collect = useContext(SeoCollectorContext);
 
+  const meta: PageMeta = {
+    title: title ? `${title} | ${COMPANY.shortName}` : DEFAULT_TITLE,
+    description,
+    url: absolute(pathname),
+    image: absolute(image ?? "/og-image.jpg"),
+    type,
+    robots: noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large",
+    publishedTime: publishedTime ?? null,
+    // Sérialisé : les pages peuvent passer un objet recréé à chaque rendu sans relancer l'effet.
+    jsonLd: jsonLd ? JSON.stringify({ "@context": "https://schema.org", ...jsonLd }) : null,
+  };
+
+  // Pré-rendu : les métadonnées sont transmises au générateur de HTML statique.
+  collect?.(meta);
+
+  const { title: fullTitle, url, image: imageUrl, robots, jsonLd: jsonLdString } = meta;
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${COMPANY.shortName}` : DEFAULT_TITLE;
-    const url = absolute(pathname);
-    const imageUrl = absolute(image ?? "/og-image.jpg");
-
     document.title = fullTitle;
     setCanonical(url);
     setMeta("name", "description", description);
-    setMeta("name", "robots", noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large");
+    setMeta("name", "robots", robots);
     setMeta("property", "og:title", fullTitle);
     setMeta("property", "og:description", description);
     setMeta("property", "og:type", type);
@@ -83,7 +94,7 @@ export function Seo({ title, description = COMPANY.description, image, type = "w
     setMeta("name", "twitter:description", description);
     setMeta("name", "twitter:image", imageUrl);
     setJsonLd(jsonLdString);
-  }, [title, description, image, type, noindex, jsonLdString, publishedTime, pathname]);
+  }, [fullTitle, description, url, imageUrl, type, robots, jsonLdString, publishedTime]);
 
   return null;
 }

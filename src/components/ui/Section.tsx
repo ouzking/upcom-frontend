@@ -12,7 +12,7 @@ export function Eyebrow({ index, children, tone = "light", className }: { index?
         className,
       )}
     >
-      {index ? <span className={cn("font-display tabular-nums", tone === "light" ? "text-accent-deep" : "text-accent")}>{index}</span> : null}
+      {index ? <span className={cn("font-display tabular-nums", tone === "light" ? "text-accent-ink" : "text-accent")}>{index}</span> : null}
       {index ? <span className={cn("h-px w-8", tone === "light" ? "bg-brand/30" : "bg-white/30")} aria-hidden="true" /> : null}
       <span>{children}</span>
     </p>

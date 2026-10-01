@@ -16,7 +16,7 @@ export function RouteErrorPage() {
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-mist px-6 text-center">
       <Orbits className="absolute left-1/2 top-1/2 -z-10 size-[44rem] -translate-x-1/2 -translate-y-1/2 opacity-60" />
-      <Logo className="h-auto w-32" eager />
+      <Logo className="h-auto w-32" eager sizes="128px" />
       <h1 className="mt-10 text-display-md text-ink">{notFound ? "Page introuvable" : "Une erreur est survenue"}</h1>
       <p className="mt-4 max-w-md text-muted">
         {notFound ? "La page demandée n'existe pas ou a été déplacée." : "Rechargez la page. Si le problème persiste, contactez-nous par téléphone."}

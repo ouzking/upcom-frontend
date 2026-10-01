@@ -60,7 +60,7 @@ export function Expertises() {
   const current = expertises?.[active];
 
   return (
-    <section id="expertises" className="relative isolate overflow-hidden bg-brand-night py-24 text-white sm:py-32 lg:py-40" aria-labelledby="expertises-title">
+    <section id="expertises" className="defer-render relative isolate overflow-hidden bg-brand-night py-24 text-white sm:py-32 lg:py-40" aria-labelledby="expertises-title">
       <div className="absolute inset-0 -z-10 bg-noise" aria-hidden="true" />
       <div className="absolute -left-[20%] top-0 -z-10 aspect-square w-[60rem] rounded-full bg-[radial-gradient(circle,rgba(1,114,231,0.25),transparent_60%)]" aria-hidden="true" />
 

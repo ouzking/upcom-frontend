@@ -102,7 +102,7 @@ export default function EventDetailPage() {
             <Reveal delay={0.25} className="lg:col-span-3">
               <time dateTime={event.startsAt} className="block font-display leading-none lg:text-right">
                 <span className="block text-7xl font-bold tracking-tight text-brand">{day}</span>
-                <span className="mt-2 block text-sm font-semibold uppercase tracking-[0.2em] text-accent-deep">
+                <span className="mt-2 block text-sm font-semibold uppercase tracking-[0.2em] text-accent-ink">
                   {month} {year}
                 </span>
               </time>
@@ -113,7 +113,7 @@ export default function EventDetailPage() {
             <dl className="flex flex-wrap gap-x-10 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Date</dt>
-                <Clock className="size-4 text-accent-deep" aria-hidden="true" />
+                <Clock className="size-4 text-accent-ink" aria-hidden="true" />
                 <dd className="font-semibold text-ink">
                   {formatDateRange(event.startsAt, event.endsAt)} · {formatTime(event.startsAt)}
                 </dd>
@@ -121,7 +121,7 @@ export default function EventDetailPage() {
               {event.location ? (
                 <div className="flex items-center gap-2">
                   <dt className="sr-only">Lieu</dt>
-                  <MapPin className="size-4 text-accent-deep" aria-hidden="true" />
+                  <MapPin className="size-4 text-accent-ink" aria-hidden="true" />
                   <dd className="font-semibold text-ink">{event.location}</dd>
                 </div>
               ) : null}
@@ -136,7 +136,7 @@ export default function EventDetailPage() {
 
         {event.coverUrl ? (
           <div className="container-page">
-            <ImageReveal className="rounded-[2rem]">
+            <ImageReveal disabled className="rounded-[2rem]">
               <SmartImage src={event.coverUrl} alt={event.title} priority className="aspect-[16/8] rounded-[2rem]" sizes="100vw" />
             </ImageReveal>
           </div>

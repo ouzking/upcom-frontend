@@ -20,7 +20,7 @@ export function Testimonials() {
   const go = (delta: number) => setIndex((value) => (value + delta + count) % count);
 
   return (
-    <section className="relative isolate overflow-hidden bg-brand py-24 text-white sm:py-32" aria-labelledby="testimonials-title" aria-roledescription="carrousel">
+    <section className="defer-render relative isolate overflow-hidden bg-brand py-24 text-white sm:py-32" aria-labelledby="testimonials-title" aria-roledescription="carrousel">
       <div className="absolute inset-0 -z-10 bg-noise" aria-hidden="true" />
       <Quote className="absolute -left-6 top-10 -z-10 size-72 text-white/[0.04]" aria-hidden="true" />
       <div className="container-page">

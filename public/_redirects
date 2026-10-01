@@ -1,1 +1,2 @@
-/*    /index.html   200
+# Pages pré-rendues servies directement ; autres URLs (contenus publiés après le build) → application.
+/*    /app.html   200

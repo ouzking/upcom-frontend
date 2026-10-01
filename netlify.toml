@@ -10,8 +10,8 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Application monopage : toutes les routes servent index.html (les fichiers existants restent prioritaires).
+# Pages pré-rendues servies telles quelles ; les autres URLs servent la coquille de l application.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/app.html"
   status = 200
