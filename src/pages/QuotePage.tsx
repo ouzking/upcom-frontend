@@ -1,5 +1,4 @@
 import { Phone } from "lucide-react";
-import { useSearchParams } from "react-router";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { Breadcrumbs } from "@/components/layout/PageHero";
 import { Reveal, SplitWords } from "@/components/motion/primitives";
@@ -8,12 +7,13 @@ import { Orbits, Slashes } from "@/components/ui/Brand";
 import { Eyebrow } from "@/components/ui/Section";
 import { APPROACH } from "@/content/agency";
 import { useSiteInfo } from "@/hooks/queries";
+import { useHydratedSearchParams } from "@/hooks/ui";
 import { telHref } from "@/lib/format";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export default function QuotePage() {
-  const [params] = useSearchParams();
+  const [params] = useHydratedSearchParams();
   const { data: site } = useSiteInfo();
   const need = params.get("besoin") ?? "";
   const service = params.get("service") ?? "";
@@ -69,7 +69,8 @@ export default function QuotePage() {
 
           <Reveal delay={0.15} className="lg:col-span-8">
             <div className="rounded-[2rem] border border-line bg-white p-6 shadow-[0_40px_80px_-50px_rgba(1,53,146,0.35)] sm:p-10 lg:p-14">
-              <QuoteForm initialNeed={need} initialServiceId={UUID.test(service) ? service : ""} />
+              {/* Clé : le formulaire repart des paramètres d'URL une fois la page hydratée. */}
+              <QuoteForm key={`${need}|${service}`} initialNeed={need} initialServiceId={UUID.test(service) ? service : ""} />
             </div>
           </Reveal>
         </div>

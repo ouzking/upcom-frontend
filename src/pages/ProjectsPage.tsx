@@ -1,6 +1,5 @@
 import { AnimatePresence, m } from "framer-motion";
 import { useMemo } from "react";
-import { useSearchParams } from "react-router";
 import { ProjectCard } from "@/components/cards/ProjectCard";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { PageHero } from "@/components/layout/PageHero";
@@ -12,12 +11,12 @@ import { FilterPills, SearchInput } from "@/components/ui/Filters";
 import { EmptyState, ErrorState, SkeletonGrid } from "@/components/ui/Feedback";
 import { PRIMARY_CTA, ROUTES } from "@/config/site";
 import { useExpertises, useProjects } from "@/hooks/queries";
-import { useDebouncedValue } from "@/hooks/ui";
+import { useDebouncedValue, useHydratedSearchParams } from "@/hooks/ui";
 import { cn } from "@/lib/cn";
 import { normalize } from "@/lib/format";
 
 export default function ProjectsPage() {
-  const [params, setParams] = useSearchParams();
+  const [params, setParams] = useHydratedSearchParams();
   const category = params.get("categorie") ?? "";
   const search = params.get("q") ?? "";
   const debouncedSearch = useDebouncedValue(search, 200);

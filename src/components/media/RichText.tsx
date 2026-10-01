@@ -1,10 +1,10 @@
 import DOMPurify from "dompurify";
-import { Fragment, useSyncExternalStore, type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
+import { useIsHydrated } from "@/hooks/ui";
 import { cn } from "@/lib/cn";
 import { parseVideoUrl } from "@/lib/video";
 import { VideoEmbed } from "./VideoEmbed";
 
-const subscribeNothing = () => () => undefined;
 
 /**
  * Rendu sûr du contenu saisi au back-office (articles, réalisations, services).
@@ -33,7 +33,7 @@ if (typeof window !== "undefined") DOMPurify.addHook("afterSanitizeAttributes", 
 
 function SanitizedHtml({ html, className }: { html: string; className?: string }) {
   // Nettoyage côté navigateur uniquement : rien n'est rendu au pré-rendu, ni au tout premier rendu d'hydratation.
-  const isClient = useSyncExternalStore(subscribeNothing, () => true, () => false);
+  const isClient = useIsHydrated();
   if (!isClient) return <div className={cn("prose-upcom", className)} />;
   const clean = DOMPurify.sanitize(html, {
     USE_PROFILES: { html: true },

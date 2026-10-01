@@ -1,4 +1,5 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { useSearchParams, type SetURLSearchParams } from "react-router";
 
 export function useDebouncedValue<T>(value: T, delay = 300): T {
   const [debounced, setDebounced] = useState(value);
@@ -35,3 +36,22 @@ export function useLockBodyScroll(locked: boolean): void {
     };
   }, [locked]);
 }
+
+const subscribeNothing = () => () => undefined;
+
+/**
+ * `false` pendant le pré-rendu et le rendu d'hydratation, `true` ensuite.
+ * Sert à n'utiliser qu'après l'hydratation ce que le HTML pré-rendu ne peut pas
+ * connaître (paramètres d'URL…), sans écart entre HTML serveur et navigateur.
+ */
+export function useIsHydrated(): boolean {
+  return useSyncExternalStore(subscribeNothing, () => true, () => false);
+}
+
+/** Paramètres d'URL, vides tant que la page pré-rendue n'est pas hydratée. */
+export function useHydratedSearchParams(): [URLSearchParams, SetURLSearchParams] {
+  const [params, setParams] = useSearchParams();
+  return [useIsHydrated() ? params : EMPTY_PARAMS, setParams];
+}
+
+const EMPTY_PARAMS = new URLSearchParams();

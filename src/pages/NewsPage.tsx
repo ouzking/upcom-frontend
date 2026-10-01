@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router";
 import { ArticleCard } from "@/components/cards/ArticleCard";
 import { NewsTabs } from "@/components/layout/NewsTabs";
 import { PageHero } from "@/components/layout/PageHero";
@@ -11,10 +10,10 @@ import { EmptyState, ErrorState, SkeletonGrid } from "@/components/ui/Feedback";
 import { FilterPills, SearchInput } from "@/components/ui/Filters";
 import { ROUTES } from "@/config/site";
 import { useArticleCategories, useArticles } from "@/hooks/queries";
-import { useDebouncedValue } from "@/hooks/ui";
+import { useDebouncedValue, useHydratedSearchParams } from "@/hooks/ui";
 
 export default function NewsPage() {
-  const [params, setParams] = useSearchParams();
+  const [params, setParams] = useHydratedSearchParams();
   const categorySlug = params.get("categorie") ?? "";
   const search = params.get("q") ?? "";
   const debouncedSearch = useDebouncedValue(search.trim(), 350);
