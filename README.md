@@ -140,7 +140,8 @@ Hypothèses à confirmer :
 
 - **Charte** : bleu `#013592` dominant, orange `#FD8E03` en accent, dégradés officiels réservés au hero et au
   CTA final. Tokens dans `src/index.css` (`@theme`).
-- **Typographie** (auto-hébergée) : Bricolage Grotesque (titres, mots d'accent en couleur),
+- **Typographie** : Times New Roman (police système) pour tout le site, avec Tinos (mêmes dimensions,
+  auto-hébergée) téléchargée uniquement sur les appareils qui n'ont pas Times New Roman (Android).
   Manrope (texte).
 - **Motifs** issus du logo : orbites elliptiques et trois barres obliques.
 - **Animations** : Framer Motion en `LazyMotion` (fonctionnalités chargées à la demande), révélations au

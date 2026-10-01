@@ -1,50 +1,8 @@
-@import "@fontsource-variable/bricolage-grotesque/wght.css";
-@import "@fontsource-variable/manrope/wght.css";
+/* Times New Roman (police système). Tinos — mêmes dimensions que Times New Roman — n'est
+   téléchargée que sur les appareils qui n'ont pas Times New Roman (Android notamment). */
+@import "@fontsource/tinos/latin-400.css";
+@import "@fontsource/tinos/latin-700.css";
 @import "tailwindcss";
-
-/* Polices de repli calibrées (largeur et hauteur de ligne) sur Bricolage Grotesque et Manrope :
-   le remplacement par la police définitive, une fois chargée, ne décale plus la mise en page (CLS). */
-@font-face {
-  font-family: "Bricolage Fallback";
-  src: local("Arial Bold"), local("Arial-BoldMT");
-  font-weight: 500 900;
-  size-adjust: 100.63%;
-  ascent-override: 92.42%;
-  descent-override: 26.83%;
-  line-gap-override: 0%;
-}
-@font-face {
-  font-family: "Bricolage Fallback";
-  src: local("Arial"), local("ArialMT");
-  font-weight: 100 499;
-  size-adjust: 100.63%;
-  ascent-override: 92.42%;
-  descent-override: 26.83%;
-  line-gap-override: 0%;
-}
-@font-face {
-  font-family: "Manrope Fallback";
-  src: local("Arial"), local("ArialMT");
-  font-weight: 100 599;
-  size-adjust: 104.05%;
-  ascent-override: 102.45%;
-  descent-override: 28.83%;
-  line-gap-override: 0%;
-}
-@font-face {
-  font-family: "Manrope Fallback";
-  src: local("Arial Bold"), local("Arial-BoldMT");
-  font-weight: 600 900;
-  size-adjust: 104.05%;
-  ascent-override: 102.45%;
-  descent-override: 28.83%;
-  line-gap-override: 0%;
-}
-
-/* ==========================================================================
-   UPCOM — système de design
-   Bleu institutionnel dominant · orange en accent · blanc pour respirer.
-   ========================================================================== */
 
 @theme {
   /* Couleurs de marque (charte officielle) */
@@ -66,8 +24,8 @@
   --color-paper: #ffffff;
 
   /* Typographie */
-  --font-display: "Bricolage Grotesque Variable", "Bricolage Fallback", system-ui, sans-serif;
-  --font-sans: "Manrope Variable", "Manrope Fallback", system-ui, sans-serif;
+  --font-display: "Times New Roman", Tinos, Times, serif;
+  --font-sans: "Times New Roman", Tinos, Times, serif;
 
   /* Mouvement */
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
@@ -121,7 +79,8 @@
 
   body {
     @apply bg-paper font-sans text-ink antialiased;
-    font-feature-settings: "ss01", "cv11";
+    font-kerning: normal;
+    font-variant-ligatures: common-ligatures;
   }
 
   h1, h2, h3, h4 {
@@ -169,29 +128,29 @@
   font-family: var(--font-display);
   font-size: clamp(2.6rem, 7.4vw, 7.25rem);
   line-height: 0.94;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   font-weight: 700;
 }
 @utility text-display-lg {
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 5.2vw, 5rem);
   line-height: 0.98;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.018em;
   font-weight: 700;
 }
 @utility text-display-md {
   font-family: var(--font-display);
   font-size: clamp(1.85rem, 3.6vw, 3.4rem);
   line-height: 1.04;
-  letter-spacing: -0.03em;
-  font-weight: 650;
+  letter-spacing: -0.012em;
+  font-weight: 700;
 }
 @utility text-display-sm {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.2vw, 2rem);
   line-height: 1.12;
   letter-spacing: -0.02em;
-  font-weight: 650;
+  font-weight: 700;
 }
 @utility text-lead {
   font-size: clamp(1.05rem, 1.35vw, 1.3rem);
@@ -249,13 +208,13 @@
     font-size: clamp(1.5rem, 2.4vw, 2rem);
     line-height: 1.15;
     letter-spacing: -0.02em;
-    font-weight: 650;
+    font-weight: 700;
     margin-top: 2em;
   }
   & h3 {
     color: var(--color-ink);
     font-size: 1.3rem;
-    font-weight: 650;
+    font-weight: 700;
     margin-top: 1.6em;
   }
   & a {
