@@ -3,7 +3,7 @@ import { CtaBand } from "@/components/layout/CtaBand";
 import { PageHero } from "@/components/layout/PageHero";
 import { RichText } from "@/components/media/RichText";
 import { SmartImage } from "@/components/media/SmartImage";
-import { ImageReveal, Reveal } from "@/components/motion/primitives";
+import { CssReveal, ImageReveal } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { absoluteUrl } from "@/lib/seo";
 import { ButtonLink } from "@/components/ui/Button";
@@ -57,11 +57,11 @@ export default function ServiceDetailPage() {
           { label: service.title },
         ]}
       >
-        <Reveal delay={0.45} className="mt-10">
+        <CssReveal delay={0.45} className="mt-10">
           <ButtonLink to={quoteLink} variant="accent" size="lg" arrow>
             Demander un devis
           </ButtonLink>
-        </Reveal>
+        </CssReveal>
       </PageHero>
 
       <article className="container-page py-20 sm:py-28">

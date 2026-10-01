@@ -1,7 +1,7 @@
 import { Phone } from "lucide-react";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { Breadcrumbs } from "@/components/layout/PageHero";
-import { Reveal, SplitWords } from "@/components/motion/primitives";
+import { CssReveal, SplitWords } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { Orbits, Slashes } from "@/components/ui/Brand";
 import { Eyebrow } from "@/components/ui/Section";
@@ -30,13 +30,13 @@ export default function QuotePage() {
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-32">
               <Breadcrumbs items={[{ label: "Démarrer un projet" }]} />
-              <Reveal className="mt-10">
+              <CssReveal className="mt-10">
                 <Eyebrow>Demande de projet</Eyebrow>
-              </Reveal>
+              </CssReveal>
               <h1 className="mt-6 text-display-lg text-ink">
                 <SplitWords text="Démarrons votre projet." accentWords={["projet"]} accentClassName="text-brand" immediate delay={0.1} />
               </h1>
-              <Reveal delay={0.3}>
+              <CssReveal delay={0.3}>
                 <p className="mt-6 text-lead text-muted">Quelques informations suffisent : l'équipe UPCOM étudie votre besoin et revient vers vous pour en échanger.</p>
 
                 <ol className="mt-10 space-y-4">
@@ -63,16 +63,16 @@ export default function QuotePage() {
                     ))}
                   </ul>
                 </div>
-              </Reveal>
+              </CssReveal>
             </div>
           </aside>
 
-          <Reveal delay={0.15} className="lg:col-span-8">
+          <CssReveal delay={0.15} className="lg:col-span-8">
             <div className="rounded-[2rem] border border-line bg-white p-6 shadow-[0_40px_80px_-50px_rgba(1,53,146,0.35)] sm:p-10 lg:p-14">
               {/* Clé : le formulaire repart des paramètres d'URL une fois la page hydratée. */}
               <QuoteForm key={`${need}|${service}`} initialNeed={need} initialServiceId={UUID.test(service) ? service : ""} />
             </div>
-          </Reveal>
+          </CssReveal>
         </div>
       </section>
     </>

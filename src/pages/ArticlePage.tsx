@@ -7,7 +7,7 @@ import { Breadcrumbs } from "@/components/layout/PageHero";
 import { RichText } from "@/components/media/RichText";
 import { SmartImage } from "@/components/media/SmartImage";
 import { SocialIcon } from "@/components/media/SocialIcon";
-import { ImageReveal, Reveal, SplitWords } from "@/components/motion/primitives";
+import { CssReveal, ImageReveal, SplitWords } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { absoluteUrl } from "@/lib/seo";
 import { ErrorState, Skeleton } from "@/components/ui/Feedback";
@@ -108,7 +108,7 @@ export default function ArticlePage() {
       <article>
         <header className="container-page max-w-5xl pb-12 pt-32 sm:pt-40">
           <Breadcrumbs items={[{ label: "Actualités", to: ROUTES.news }, { label: article.title }]} />
-          <Reveal y={12} className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+          <CssReveal className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
             {article.category ? (
               <Link to={`${ROUTES.news}?categorie=${article.category.slug}`} className="rounded-full bg-accent/15 px-3 py-1 font-semibold text-accent-ink transition hover:bg-accent/25">
                 {article.category.name}
@@ -117,22 +117,22 @@ export default function ArticlePage() {
             <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
             <span aria-hidden="true">·</span>
             <span>{minutes} min de lecture</span>
-          </Reveal>
+          </CssReveal>
           <h1 className="mt-6 text-display-lg text-ink">
             <SplitWords text={article.title} immediate delay={0.1} />
           </h1>
           {article.excerpt ? (
-            <Reveal delay={0.3}>
+            <CssReveal delay={0.3}>
               <p className="mt-8 text-lead text-muted">{article.excerpt}</p>
-            </Reveal>
+            </CssReveal>
           ) : null}
-          <Reveal delay={0.4} className="mt-10 flex flex-col gap-6 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <CssReveal delay={0.4} className="mt-10 flex flex-col gap-6 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm">
               <span className="text-muted">Par </span>
               <span className="font-semibold text-ink">{article.authorName ?? COMPANY.name}</span>
             </p>
             <ShareBar url={url} title={article.title} />
-          </Reveal>
+          </CssReveal>
         </header>
 
         {article.coverUrl ? (

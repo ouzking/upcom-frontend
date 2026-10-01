@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/layout/PageHero";
 import { Gallery } from "@/components/media/Gallery";
 import { RichText } from "@/components/media/RichText";
 import { SmartImage } from "@/components/media/SmartImage";
-import { ImageReveal, Reveal, SplitWords } from "@/components/motion/primitives";
+import { CssReveal, ImageReveal, SplitWords } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { absoluteUrl } from "@/lib/seo";
 import { ErrorState, Skeleton } from "@/components/ui/Feedback";
@@ -70,9 +70,9 @@ export default function ProjectDetailPage() {
               </h1>
             </div>
             {project.excerpt ? (
-              <Reveal delay={0.3} className="lg:col-span-4">
+              <CssReveal delay={0.3} className="lg:col-span-4">
                 <p className="text-lead text-muted">{project.excerpt}</p>
-              </Reveal>
+              </CssReveal>
             ) : null}
           </div>
         </header>

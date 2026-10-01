@@ -4,7 +4,7 @@ import { CtaBand } from "@/components/layout/CtaBand";
 import { Breadcrumbs } from "@/components/layout/PageHero";
 import { RichText } from "@/components/media/RichText";
 import { SmartImage } from "@/components/media/SmartImage";
-import { ImageReveal, Reveal, SplitWords } from "@/components/motion/primitives";
+import { CssReveal, ImageReveal, SplitWords } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { absoluteUrl } from "@/lib/seo";
 import { Button } from "@/components/ui/Button";
@@ -99,17 +99,17 @@ export default function EventDetailPage() {
                 <SplitWords text={event.title} immediate delay={0.1} />
               </h1>
             </div>
-            <Reveal delay={0.25} className="lg:col-span-3">
+            <CssReveal delay={0.25} className="lg:col-span-3">
               <time dateTime={event.startsAt} className="block font-display leading-none lg:text-right">
                 <span className="block text-7xl font-bold tracking-tight text-brand">{day}</span>
                 <span className="mt-2 block text-sm font-semibold uppercase tracking-[0.2em] text-accent-ink">
                   {month} {year}
                 </span>
               </time>
-            </Reveal>
+            </CssReveal>
           </div>
 
-          <Reveal delay={0.35} className="mt-10 flex flex-col gap-6 border-t border-line pt-6 md:flex-row md:items-center md:justify-between">
+          <CssReveal delay={0.35} className="mt-10 flex flex-col gap-6 border-t border-line pt-6 md:flex-row md:items-center md:justify-between">
             <dl className="flex flex-wrap gap-x-10 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Date</dt>
@@ -131,7 +131,7 @@ export default function EventDetailPage() {
                 Ajouter à mon agenda
               </Button>
             ) : null}
-          </Reveal>
+          </CssReveal>
         </header>
 
         {event.coverUrl ? (

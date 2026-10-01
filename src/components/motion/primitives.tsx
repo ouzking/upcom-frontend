@@ -11,6 +11,18 @@ type RevealProps = HTMLMotionProps<"div"> & {
   y?: number;
 };
 
+/**
+ * Apparition en CSS, pour le haut de page : le contenu est visible dès le HTML
+ * pré-rendu, sans attendre le chargement de Framer Motion (meilleur LCP).
+ */
+export function CssReveal({ delay = 0, className, children }: { delay?: number; className?: string; children: ReactNode }) {
+  return (
+    <div className={cn("animate-fade-up", className)} style={delay ? { animationDelay: `${delay}s` } : undefined}>
+      {children}
+    </div>
+  );
+}
+
 /** Apparition au scroll (fondu + montée). */
 export function Reveal({ delay = 0, y = 28, children, ...props }: RevealProps) {
   return (

@@ -3,7 +3,7 @@ import { useState, type ReactNode } from "react";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { PageHero } from "@/components/layout/PageHero";
 import { SocialIcon } from "@/components/media/SocialIcon";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
+import { CssReveal, Reveal } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { Orbits } from "@/components/ui/Brand";
 import { ButtonAnchor, ButtonLink } from "@/components/ui/Button";
@@ -96,13 +96,13 @@ export default function ContactPage() {
       />
 
       <section className="container-page grid gap-16 py-20 sm:py-28 lg:grid-cols-12 lg:gap-12">
-        <Stagger className="lg:col-span-5" stagger={0.08}>
-          <StaggerItem>
+        <div className="lg:col-span-5 animate-fade-up">
+          <div>
             <InfoBlock icon={<MapPin className="size-5" aria-hidden="true" />} title="Adresse">
               <address className="font-display text-xl font-semibold not-italic leading-snug text-ink">{site?.address ?? COMPANY.address}</address>
             </InfoBlock>
-          </StaggerItem>
-          <StaggerItem>
+          </div>
+          <div>
             <InfoBlock icon={<Phone className="size-5" aria-hidden="true" />} title="Téléphone">
               <ul className="space-y-1">
                 {phones.map((phone) => (
@@ -114,24 +114,24 @@ export default function ContactPage() {
                 ))}
               </ul>
             </InfoBlock>
-          </StaggerItem>
+          </div>
           {site?.email ? (
-            <StaggerItem>
+            <div>
               <InfoBlock icon={<Mail className="size-5" aria-hidden="true" />} title="E-mail">
                 <a href={`mailto:${site.email}`} className="break-all font-display text-xl font-semibold text-ink transition hover:text-brand">
                   {site.email}
                 </a>
               </InfoBlock>
-            </StaggerItem>
+            </div>
           ) : null}
           {site?.openingHours ? (
-            <StaggerItem>
+            <div>
               <InfoBlock icon={<Clock className="size-5" aria-hidden="true" />} title="Horaires">
                 <p className="whitespace-pre-line text-ink">{site.openingHours}</p>
               </InfoBlock>
-            </StaggerItem>
+            </div>
           ) : null}
-          <StaggerItem className="flex flex-col gap-3 border-t border-line pt-8 sm:flex-row lg:flex-col xl:flex-row">
+          <div className="flex flex-col gap-3 border-t border-line pt-8 sm:flex-row lg:flex-col xl:flex-row">
             {whatsapp ? (
               <ButtonAnchor
                 href={whatsappHref(whatsapp, "Bonjour UPCOM, je souhaite échanger au sujet d'un projet.")}
@@ -146,9 +146,9 @@ export default function ContactPage() {
             <ButtonLink to={PRIMARY_CTA.to} variant="accent" arrow>
               {PRIMARY_CTA.label}
             </ButtonLink>
-          </StaggerItem>
+          </div>
           {site && site.socials.length > 0 ? (
-            <StaggerItem className="mt-8">
+            <div className="mt-8">
               <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Suivez-nous</h2>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {site.socials.map((social) => (
@@ -165,17 +165,17 @@ export default function ContactPage() {
                   </li>
                 ))}
               </ul>
-            </StaggerItem>
+            </div>
           ) : null}
-        </Stagger>
+        </div>
 
-        <Reveal delay={0.1} className="lg:col-span-7">
+        <CssReveal delay={0.1} className="lg:col-span-7">
           <div className="rounded-[2rem] border border-line bg-white p-6 shadow-[0_40px_80px_-50px_rgba(1,53,146,0.35)] sm:p-10">
             <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">Envoyez-nous un message</h2>
             <p className="mb-8 mt-2 text-muted">Nous vous répondons dans les meilleurs délais.</p>
             <ContactForm />
           </div>
-        </Reveal>
+        </CssReveal>
       </section>
 
       <section className="container-page pb-24" aria-label="Localisation">

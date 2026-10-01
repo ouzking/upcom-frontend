@@ -4,7 +4,7 @@ import { ProjectCard } from "@/components/cards/ProjectCard";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { PageHero } from "@/components/layout/PageHero";
 import { SmartImage } from "@/components/media/SmartImage";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
+import { CssReveal, Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { absoluteUrl, breadcrumbJsonLd } from "@/lib/seo";
 import { ButtonLink, TextLink } from "@/components/ui/Button";
@@ -71,14 +71,14 @@ export default function ExpertiseDetailPage() {
         intro={expertise.description}
         crumbs={[{ label: "Services", to: ROUTES.services }, { label: expertise.name }]}
       >
-        <Reveal delay={0.45} className="mt-10 flex flex-wrap gap-3">
+        <CssReveal delay={0.45} className="mt-10 flex flex-wrap gap-3">
           <ButtonLink to={quoteLink} variant="accent" size="lg" arrow>
             Démarrer un projet
           </ButtonLink>
           <ButtonLink to={ROUTES.contact} variant="outline" size="lg">
             Nous contacter
           </ButtonLink>
-        </Reveal>
+        </CssReveal>
       </PageHero>
 
       {/* Prestations */}
