@@ -170,8 +170,10 @@ Hypothèses à confirmer :
 ## Performance et accessibilité
 
 - Page d'accueil dans le bundle principal, autres pages en chunks ; supabase-js chargé à la demande.
-- CSS intégrée aux pages pré-rendues ; polices principales préchargées, avec polices de repli calibrées
-  (`size-adjust`) pour éviter tout décalage de mise en page à leur chargement.
+- CSS intégrée aux pages pré-rendues (les polices auto-hébergées y sont découvertes immédiatement) ; image
+  principale de chaque page préchargée en tête du HTML. Polices de repli calibrées (`size-adjust`) : aucun
+  décalage de mise en page quand la police définitive arrive (le préchargement des polices a été retiré, il
+  concurrençait l'image principale sur mobile).
 - Hydratation après le premier affichage ; animations d'entrée du haut de page en CSS ; sections sous la ligne
   de flottaison en `content-visibility: auto`.
 - Contrastes AA (orange de texte `accent-ink` #C23A00), hiérarchie de titres, focus visible, navigation clavier,
