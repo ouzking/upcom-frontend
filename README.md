@@ -223,7 +223,8 @@ Déploiement manuel (dépannage) : `npm run build` puis `netlify deploy --prod -
 - **Images** : chemins Storage (`image_path`, `cover_image_path`, `photo_path`), WebP ≤ 2000 px ≤ 1 Mo ; conteneurs à
   ratio fixe (pas de décalage), `loading="lazy"` sauf image principale, visuel de repli si absente ; `alt` = texte
   alternatif de la galerie (`project_images.alt_text`) ou titre du contenu.
-- **Champs facultatifs vides** (e-mail, WhatsApp, horaires, réseaux sociaux) : bloc masqué. La carte reste affichée
+- **Champs facultatifs vides** (e-mail, horaires, réseaux sociaux) : bloc masqué. WhatsApp : `whatsapp_number`
+  s'il est renseigné, sinon le 77 402 74 94 (bouton flottant et page contact). La carte reste affichée
   à partir de l'adresse officielle tant que `map_url` est vide.
 - **Fraîcheur** : données mises en cache 5 minutes dans le navigateur ; un rechargement affiche immédiatement les
   dernières publications.

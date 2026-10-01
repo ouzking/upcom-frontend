@@ -65,8 +65,8 @@ function MapBlock({ query, mapUrl }: { query: string; mapUrl: string | null }) {
 export default function ContactPage() {
   const { data: site } = useSiteInfo();
   const phones = site?.phones ?? [...COMPANY.phones];
-  // Bouton WhatsApp uniquement si le numéro est renseigné au back-office.
-  const whatsapp = site?.whatsapp ?? null;
+  // Numéro WhatsApp du back-office, à défaut le numéro officiel (77 402 74 94).
+  const whatsapp = site?.whatsapp ?? COMPANY.phones[0];
 
   return (
     <>
