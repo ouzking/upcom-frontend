@@ -23,7 +23,7 @@ function FeaturedEvent({ event }: { event: EventItem }) {
     <div>
       <Link to={ROUTES.event(event.slug)} className="group grid overflow-hidden rounded-[2rem] bg-brand-night text-white lg:grid-cols-12">
         <ImageReveal disabled className="lg:col-span-7">
-          <SmartImage src={event.coverUrl} alt="" seed={event.id} fallbackIcon="calendar-range" className="aspect-[16/10] h-full" imgClassName="group-hover:scale-[1.03]" priority />
+          <SmartImage src={event.coverUrl} alt={event.title} seed={event.id} fallbackIcon="calendar-range" className="aspect-[16/10] h-full" imgClassName="group-hover:scale-[1.03]" priority />
         </ImageReveal>
         <div className="flex flex-col justify-between gap-10 p-8 sm:p-12 lg:col-span-5">
           <div>

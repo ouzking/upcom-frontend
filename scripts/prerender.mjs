@@ -82,7 +82,8 @@ function preloadLcpImage(page, html) {
 }
 
 const routes = await listSiteRoutes();
-const origin = siteUrl || "https://upcomagency.com";
+if (!siteUrl) throw new Error("[prerender] VITE_SITE_URL est requis (URL canonique du site, ex. https://www.upcomagency.com).");
+const origin = siteUrl;
 let count = 0;
 const failures = [];
 

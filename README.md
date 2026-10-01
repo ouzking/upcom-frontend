@@ -187,6 +187,43 @@ des Edge Functions, puis rebuild. La CSP autorise déjà `https://challenges.clo
 
 ## Déploiement
 
-Hébergement **Netlify** : `netlify.toml` (build, Node 22, repli vers `app.html`), `public/_redirects` et `public/_headers`
+**Domaine canonique : `https://www.upcomagency.com`** (même adresse que le backend — `SITE_PUBLIC_URL` — et le
+back-office). Sur Netlify, `www.upcomagency.com` est le domaine principal ; `upcomagency.com` redirige en 301 vers
+`www` en conservant le chemin. Canonical, Open Graph, JSON-LD, sitemap et robots.txt dérivent de `VITE_SITE_URL`.
+
+Hébergement **Netlify** : `netlify.toml` (Node 22, repli vers `app.html`), `public/_redirects` et `public/_headers`
 (HSTS, nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, CSP limitée au projet Supabase et à Cloudflare, cache).
-Définir `VITE_SUPABASE_URL` et `VITE_SUPABASE_PUBLISHABLE_KEY` dans Netlify : le build de production échoue si elles manquent ou pointent vers une adresse locale.
+Le build de production échoue si `VITE_SUPABASE_URL` / `VITE_SUPABASE_PUBLISHABLE_KEY` manquent ou sont locales.
+
+### Déploiement automatique (GitHub Actions)
+
+`.github/workflows/deploy.yml` construit le site (pré-rendu + sitemap) et le déploie en production :
+**chaque nuit à 02:00** (contenus publiés ou articles programmés depuis le back-office intégrés au sitemap sans
+intervention), **à chaque push sur `main`**, et **à la demande** (Actions → « Déploiement Netlify » → Run workflow).
+Le site Netlify n'étant pas relié à Git, le workflow déploie via la CLI Netlify (un *build hook* Netlify exigerait
+ce lien).
+
+Configuration (GitHub → Settings → Secrets and variables → Actions) — le workflow est ignoré tant qu'elle manque :
+
+| Type | Nom | Valeur |
+|---|---|---|
+| Secret | `NETLIFY_AUTH_TOKEN` | jeton personnel Netlify (User settings → Applications → New access token) |
+| Secret | `NETLIFY_SITE_ID` | `0868c1b1-77d7-4d7b-aca9-5f96a2e90e9d` |
+| Variable | `VITE_SUPABASE_URL` | `https://gopjiglltfohtzeqijsq.supabase.co` |
+| Variable | `VITE_SUPABASE_PUBLISHABLE_KEY` | clé publishable du projet (publique) |
+| Variable | `VITE_SITE_URL` | `https://www.upcomagency.com` |
+
+Déploiement manuel (dépannage) : `npm run build` puis `netlify deploy --prod --dir dist --no-build`.
+
+### Conventions partagées avec le back-office
+
+- **Texte riche** : Markdown léger lu par `RichText.tsx` (voir plus haut). Le back-office enregistre exactement ce
+  format et son aperçu reproduit ce rendu : toute évolution de syntaxe se fait dans les deux dépôts.
+- **Icônes** : `src/lib/icons.ts` (14 icônes) est copié à l'identique dans upcom-admin.
+- **Images** : chemins Storage (`image_path`, `cover_image_path`, `photo_path`), WebP ≤ 2000 px ≤ 1 Mo ; conteneurs à
+  ratio fixe (pas de décalage), `loading="lazy"` sauf image principale, visuel de repli si absente ; `alt` = texte
+  alternatif de la galerie (`project_images.alt_text`) ou titre du contenu.
+- **Champs facultatifs vides** (e-mail, WhatsApp, horaires, réseaux sociaux) : bloc masqué. La carte reste affichée
+  à partir de l'adresse officielle tant que `map_url` est vide.
+- **Fraîcheur** : données mises en cache 5 minutes dans le navigateur ; un rechargement affiche immédiatement les
+  dernières publications.

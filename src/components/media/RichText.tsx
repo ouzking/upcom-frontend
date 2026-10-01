@@ -13,6 +13,9 @@ import { VideoEmbed } from "./VideoEmbed";
  * listes `-` ou `1.`, citations `>`, **gras**, *italique*, [liens](https://…).
  * Une URL YouTube / Vimeo seule sur sa ligne devient un lecteur vidéo.
  *
+ * ⚠ C'est le format enregistré par upcom-admin, dont l'aperçu reproduit ce rendu :
+ * toute évolution de syntaxe doit être répercutée dans le back-office.
+ *
  * Si le contenu est du HTML (éditeur riche), il est nettoyé par DOMPurify avant
  * affichage (scripts, iframes, styles et gestionnaires d'événements supprimés).
  */

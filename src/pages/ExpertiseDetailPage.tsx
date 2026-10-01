@@ -113,7 +113,7 @@ export default function ExpertiseDetailPage() {
               {poleServices.map((service) => (
                 <StaggerItem key={service.id}>
                   <Link to={ROUTES.service(expertise.slug, service.slug)} className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(1,53,146,0.35)]">
-                    <SmartImage src={service.imageUrl} alt="" seed={service.id} fallbackIcon={service.icon ?? expertise.icon} className="aspect-[16/10]" imgClassName="group-hover:scale-105" />
+                    <SmartImage src={service.imageUrl} alt={service.title} seed={service.id} fallbackIcon={service.icon ?? expertise.icon} className="aspect-[16/10]" imgClassName="group-hover:scale-105" />
                     <div className="flex flex-1 flex-col p-7">
                       <h3 className="font-display text-xl font-semibold tracking-tight text-ink group-hover:text-brand">{service.title}</h3>
                       {service.shortDescription ? <p className="mt-3 line-clamp-3 text-muted">{service.shortDescription}</p> : null}

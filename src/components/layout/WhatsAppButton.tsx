@@ -1,17 +1,17 @@
 import { m } from "framer-motion";
 import { SocialIcon } from "@/components/media/SocialIcon";
 import { EASE } from "@/components/motion/variants";
-import { COMPANY } from "@/content/company";
 import { useSiteInfo } from "@/hooks/queries";
 import { whatsappHref } from "@/lib/format";
 
 /**
- * Accès WhatsApp permanent. Numéro : `site_settings.whatsapp_number` s'il est
- * renseigné au back-office, sinon le numéro officiel principal.
+ * Accès WhatsApp permanent, affiché uniquement si `site_settings.whatsapp_number`
+ * est renseigné au back-office (aucun lien vers un numéro non confirmé).
  */
 export function WhatsAppButton() {
   const { data: site } = useSiteInfo();
-  const number = site?.whatsapp ?? site?.phones[0] ?? COMPANY.phones[0];
+  const number = site?.whatsapp;
+  if (!number) return null;
 
   return (
     <m.a

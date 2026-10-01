@@ -19,6 +19,9 @@ import {
 /**
  * Registre d'icônes autorisées. La colonne `icon` des tables `service_categories`
  * et `services` peut contenir l'une de ces clés (format kebab-case de Lucide).
+ *
+ * ⚠ Copie identique dans upcom-admin : toute icône ajoutée ici doit l'être aussi
+ * dans le back-office (sélecteur d'icônes), et inversement.
  */
 export const ICONS = {
   "briefcase-business": BriefcaseBusiness,

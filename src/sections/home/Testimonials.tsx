@@ -42,7 +42,7 @@ export function Testimonials() {
             >
               <blockquote className="max-w-5xl font-display text-[clamp(1.5rem,3vw,2.6rem)] font-medium leading-[1.25] tracking-tight">« {current.content} »</blockquote>
               <figcaption className="mt-10 flex items-center gap-4">
-                {current.photoUrl ? <img src={current.photoUrl} alt="" loading="lazy" className="size-14 rounded-full object-cover" /> : null}
+                {current.photoUrl ? <img src={current.photoUrl} alt={`Portrait de ${current.name}`} width={56} height={56} loading="lazy" className="size-14 rounded-full object-cover" /> : null}
                 <div>
                   <p className="font-semibold">{current.name}</p>
                   <p className="text-sm text-white/70">{[current.role, current.company].filter(Boolean).join(" — ")}</p>

@@ -65,8 +65,8 @@ function MapBlock({ query, mapUrl }: { query: string; mapUrl: string | null }) {
 export default function ContactPage() {
   const { data: site } = useSiteInfo();
   const phones = site?.phones ?? [...COMPANY.phones];
-  // Numéro WhatsApp défini au back-office, à défaut le numéro principal.
-  const whatsapp = site?.whatsapp ?? phones[0];
+  // Bouton WhatsApp uniquement si le numéro est renseigné au back-office.
+  const whatsapp = site?.whatsapp ?? null;
 
   return (
     <>
@@ -83,7 +83,7 @@ export default function ContactPage() {
             telephone: phones.map((phone) => toE164(phone)),
             ...(site?.email ? { email: site.email } : {}),
             ...(site?.openingHours ? { openingHours: site.openingHours } : {}),
-            sameAs: site?.socials.map((social) => social.url),
+            ...(site && site.socials.length > 0 ? { sameAs: site.socials.map((social) => social.url) } : {}),
           },
         }}
       />

@@ -13,7 +13,7 @@ export function ArticleCard({ article, variant = "default", className }: { artic
     return (
       <article className={cn("group", className)}>
         <Link to={ROUTES.article(article.slug)} className="grid grid-cols-[6.5rem_1fr] items-center gap-5 rounded-2xl py-2 sm:grid-cols-[8rem_1fr]">
-          <SmartImage src={article.coverUrl} alt="" seed={article.id} className="aspect-square rounded-2xl" imgClassName="group-hover:scale-105" />
+          <SmartImage src={article.coverUrl} alt={article.title} seed={article.id} className="aspect-square rounded-2xl" imgClassName="group-hover:scale-105" />
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
               {article.category?.name ? <span className="text-accent-ink">{article.category.name} · </span> : null}
@@ -34,7 +34,7 @@ export function ArticleCard({ article, variant = "default", className }: { artic
       <Link to={ROUTES.article(article.slug)} className={cn("block", feature && "grid gap-8 lg:grid-cols-12 lg:items-center")}>
         <SmartImage
           src={article.coverUrl}
-          alt=""
+          alt={article.title}
           seed={article.id}
           fallbackLabel={article.category?.name}
           priority={feature}
