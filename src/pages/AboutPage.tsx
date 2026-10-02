@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { PageHero } from "@/components/layout/PageHero";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
+import { CssReveal, Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { Logo } from "@/components/ui/Brand";
 import { Accent, Eyebrow, SectionHeading } from "@/components/ui/Section";
 import { Seo } from "@/components/seo/Seo";
@@ -33,7 +33,7 @@ export default function AboutPage() {
       {/* Présentation */}
       <section className="py-24 sm:py-32" aria-labelledby="about-intro">
         <div className="container-page grid items-center gap-16 lg:grid-cols-12">
-          <Reveal className="lg:col-span-6">
+          <CssReveal className="lg:col-span-6">
             <Eyebrow index="01">Qui sommes-nous</Eyebrow>
             <h2 id="about-intro" className="mt-5 text-display-md text-ink">
               Communication, création <Accent>et services</Accent>, réunis en une seule agence.
@@ -42,8 +42,8 @@ export default function AboutPage() {
               UPCOM AGENCY &amp; SERVICES a pour vocation de proposer des solutions professionnelles, créatives et adaptées aux besoins de ses clients : communication, marketing,
               communication digitale, événementiel, conception graphique et accompagnement des organisations.
             </p>
-          </Reveal>
-          <Reveal delay={0.15} className="relative lg:col-span-6">
+          </CssReveal>
+          <CssReveal delay={0.15} className="relative lg:col-span-6">
             <div className="relative">
               {/* Espace de création sans personne identifiable : la pastille du logo ne présente personne comme l'équipe UPCOM. */}
               <StockPicture image={EXPERTISE_IMAGES["identite-visuelle-creation-graphique"]!} sizes="(min-width: 1024px) 45vw, 100vw" priority className="aspect-[4/3] rounded-[2rem]" />
@@ -51,7 +51,7 @@ export default function AboutPage() {
                 <Logo className="h-auto w-24 sm:w-28" sizes="112px" />
               </div>
             </div>
-          </Reveal>
+          </CssReveal>
         </div>
       </section>
 

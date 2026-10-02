@@ -45,7 +45,8 @@ export function AmbientVideo({ className }: { className?: string }) {
     <video
       ref={ref}
       className={cn("h-full w-full object-cover", className)}
-      poster={AMBIENT_VIDEO.poster.src}
+      // Image fixe chargée seulement à l'approche (sinon un poster est téléchargé immédiatement).
+      poster={active || reduceMotion ? AMBIENT_VIDEO.poster.src : undefined}
       muted
       loop
       playsInline

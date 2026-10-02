@@ -78,7 +78,9 @@ function preloadLcpImage(page, html) {
   const srcset = attr("srcSet") ?? attr("srcset");
   const sizes = attr("sizes");
   const link = `<link rel="preload" as="image" href="${src}"${srcset ? ` imagesrcset="${srcset}"` : ""}${sizes ? ` imagesizes="${sizes}"` : ""} fetchpriority="high" />`;
-  return page.replace(/<meta charset="UTF-8" \/>/i, (charset) => `${charset}\n    ${link}`);
+  // Après la balise viewport : avant elle, le navigateur évalue `sizes` sur une largeur de bureau
+  // (980 px) et précharge une résolution trop grande.
+  return page.replace(/<meta name="viewport"[^>]*>/i, (viewport) => `${viewport}\n    ${link}`);
 }
 
 const routes = await listSiteRoutes();
