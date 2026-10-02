@@ -1,10 +1,12 @@
 import { m, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
+import { ImageReveal, Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { TextLink } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Section";
 import { ROUTES } from "@/config/site";
 import { AUDIENCES, MISSION, PRESENTATION } from "@/content/agency";
+import { StockPicture } from "@/components/media/StockPicture";
+import { STOCK } from "@/content/media";
 
 /** Mot dont l'opacité suit la progression du défilement. */
 function ScrollWord({ word, progress, range }: { word: string; progress: MotionValue<number>; range: [number, number] }) {
@@ -48,6 +50,16 @@ export function Intro() {
 
         <div className="lg:col-span-9">
           <ScrollText text={PRESENTATION} />
+
+          {/* Duo éditorial (visuels d'illustration) */}
+          <div className="mt-16 grid gap-5 sm:grid-cols-12 lg:mt-20">
+            <ImageReveal className="rounded-[1.75rem] sm:col-span-7">
+              <StockPicture image={STOCK.agenceEquipe} sizes="(min-width: 1024px) 45vw, (min-width: 640px) 58vw, 100vw" className="aspect-[3/2] rounded-[1.75rem]" />
+            </ImageReveal>
+            <ImageReveal delay={0.15} className="rounded-[1.75rem] sm:col-span-5 sm:mt-20">
+              <StockPicture image={STOCK.agenceCollaboration} sizes="(min-width: 1024px) 32vw, (min-width: 640px) 42vw, 100vw" className="aspect-[4/3] rounded-[1.75rem]" />
+            </ImageReveal>
+          </div>
 
           <div className="mt-16 grid gap-12 border-t border-line pt-12 md:grid-cols-2 md:gap-16 lg:mt-24">
             <Reveal>

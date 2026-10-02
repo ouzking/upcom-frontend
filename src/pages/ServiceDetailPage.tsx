@@ -12,6 +12,8 @@ import { ROUTES } from "@/config/site";
 import { COMPANY } from "@/content/company";
 import { useService } from "@/hooks/queries";
 import NotFoundPage from "./NotFoundPage";
+import { StockPicture } from "@/components/media/StockPicture";
+import { EXPERTISE_IMAGES } from "@/content/media";
 
 export default function ServiceDetailPage() {
   const { expertiseSlug = "", serviceSlug = "" } = useParams();
@@ -69,6 +71,9 @@ export default function ServiceDetailPage() {
           <ImageReveal disabled className="mb-16 rounded-[2rem]">
             <SmartImage src={service.imageUrl} alt={service.title} priority className="aspect-[16/8] rounded-[2rem]" />
           </ImageReveal>
+        ) : category && EXPERTISE_IMAGES[category.slug] ? (
+          // Pas encore d'image pour cette prestation : visuel d'illustration de son pôle.
+          <StockPicture image={EXPERTISE_IMAGES[category.slug]!} sizes="(min-width: 1408px) 1300px, 100vw" priority className="mb-16 aspect-[4/3] rounded-[2rem] sm:aspect-[16/8]" />
         ) : null}
         <div className="mx-auto max-w-3xl">
           {service.description ? (

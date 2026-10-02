@@ -16,6 +16,8 @@ import { useExpertises, useProjects, useServices } from "@/hooks/queries";
 import { toE164 } from "@/lib/format";
 import NotFoundPage from "./NotFoundPage";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
+import { StockPicture } from "@/components/media/StockPicture";
+import { EXPERTISE_IMAGES } from "@/content/media";
 
 export default function ExpertiseDetailPage() {
   const { expertiseSlug = "" } = useParams();
@@ -80,6 +82,17 @@ export default function ExpertiseDetailPage() {
           </ButtonLink>
         </CssReveal>
       </PageHero>
+
+      {EXPERTISE_IMAGES[expertise.slug] ? (
+        <div className="container-page pt-12 sm:pt-16">
+          <StockPicture
+            image={EXPERTISE_IMAGES[expertise.slug]!}
+            sizes="(min-width: 1408px) 1300px, 100vw"
+            priority
+            className="aspect-[4/3] rounded-[2rem] sm:aspect-[21/9]"
+          />
+        </div>
+      ) : null}
 
       {/* Prestations */}
       <section className="py-24 sm:py-32" aria-labelledby="offerings-title">

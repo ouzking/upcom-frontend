@@ -13,6 +13,8 @@ import { useExpertises } from "@/hooks/queries";
 import { Approach } from "@/sections/home/Approach";
 import { WhyUpcom } from "@/sections/home/WhyUpcom";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
+import { StockPicture } from "@/components/media/StockPicture";
+import { EXPERTISE_IMAGES } from "@/content/media";
 
 const CHANNELS = [
   { title: "Supports numériques", items: ["Réseaux sociaux", "Contenus et publications", "Campagnes sponsorisées", "Newsletters", "Référencement et visibilité en ligne", "Bannières web"] },
@@ -58,6 +60,15 @@ export default function KnowHowPage() {
                     to={ROUTES.expertise(expertise.slug)}
                     className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-white p-8 transition-all duration-500 ease-premium hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_30px_60px_-30px_rgba(1,53,146,0.35)]"
                   >
+                    {EXPERTISE_IMAGES[expertise.slug] ? (
+                      <StockPicture
+                        image={EXPERTISE_IMAGES[expertise.slug]!}
+                        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
+                        decorative
+                        className="-mx-8 -mt-8 mb-8 aspect-[16/10]"
+                        imgClassName="transition-transform duration-700 ease-premium group-hover:scale-[1.04]"
+                      />
+                    ) : null}
                     <div className="flex items-start justify-between">
                       <span className="flex size-14 items-center justify-center rounded-2xl bg-mist text-brand transition-colors duration-500 group-hover:bg-brand group-hover:text-white">
                         <DynamicIcon name={expertise.icon} className="size-6" aria-hidden="true" />

@@ -11,6 +11,8 @@ import { useExpertises } from "@/hooks/queries";
 import { cn } from "@/lib/cn";
 import type { Expertise } from "@/types/domain";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
+import { StockPicture } from "@/components/media/StockPicture";
+import { EXPERTISE_IMAGES } from "@/content/media";
 
 const PREVIEW_COUNT = 6;
 
@@ -18,14 +20,28 @@ function ExpertiseDetails({ expertise, compact = false }: { expertise: Expertise
   const preview = expertise.offerings.slice(0, PREVIEW_COUNT);
   const remaining = expertise.offerings.length - preview.length;
 
+  const image = EXPERTISE_IMAGES[expertise.slug];
+  const badge = (
+    <span className="flex size-14 items-center justify-center rounded-2xl bg-accent text-ink shadow-[0_12px_30px_-10px_rgba(253,142,3,0.6)]">
+      <DynamicIcon name={expertise.icon} className="size-6" aria-hidden="true" />
+    </span>
+  );
+
   return (
     <div>
-      {!compact ? (
-        <span className="flex size-14 items-center justify-center rounded-2xl bg-accent text-ink">
-          <DynamicIcon name={expertise.icon} className="size-6" aria-hidden="true" />
-        </span>
+      {image ? (
+        <div className={cn("relative", compact ? "mb-6" : "mb-10")}>
+          <StockPicture
+            image={image}
+            sizes={compact ? "(min-width: 640px) 80vw, 100vw" : "(min-width: 1280px) 460px, 38vw"}
+            className="aspect-[16/9] rounded-2xl"
+          />
+          {!compact ? <div className="absolute -bottom-7 left-6">{badge}</div> : null}
+        </div>
+      ) : !compact ? (
+        badge
       ) : null}
-      {!compact ? <h3 className="mt-8 text-display-sm text-white">{expertise.name}</h3> : null}
+      {!compact ? <h3 className={cn("text-display-sm text-white", image ? "mt-12" : "mt-8")}>{expertise.name}</h3> : null}
       <p className={cn("leading-relaxed text-white/75", compact ? "text-base" : "mt-4 text-lg")}>{expertise.description}</p>
       {preview.length > 0 ? (
         <ul className="mt-7 grid gap-x-6 gap-y-3 sm:grid-cols-2">

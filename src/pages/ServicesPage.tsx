@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { PageHero } from "@/components/layout/PageHero";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
+import { ImageReveal, Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { ButtonLink } from "@/components/ui/Button";
@@ -12,6 +12,8 @@ import { useExpertises, useServices } from "@/hooks/queries";
 import { cn } from "@/lib/cn";
 import type { Expertise, ServiceItem } from "@/types/domain";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
+import { StockPicture } from "@/components/media/StockPicture";
+import { EXPERTISE_IMAGES } from "@/content/media";
 
 function ExpertiseRow({ expertise, index, services }: { expertise: Expertise; index: number; services: ServiceItem[] }) {
   const reversed = index % 2 === 1;
@@ -41,6 +43,11 @@ function ExpertiseRow({ expertise, index, services }: { expertise: Expertise; in
         </Reveal>
 
         <div className={cn("lg:col-span-7", reversed && "lg:order-1 lg:col-start-1")}>
+          {EXPERTISE_IMAGES[expertise.slug] ? (
+            <ImageReveal className="mb-10 rounded-[1.75rem]">
+              <StockPicture image={EXPERTISE_IMAGES[expertise.slug]!} sizes="(min-width: 1024px) 55vw, 100vw" className="aspect-[16/9] rounded-[1.75rem]" />
+            </ImageReveal>
+          ) : null}
           {expertise.offerings.length > 0 ? (
             <Stagger className="grid gap-x-8 sm:grid-cols-2" stagger={0.04}>
               {expertise.offerings.map((offering) => (

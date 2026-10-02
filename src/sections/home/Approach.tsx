@@ -1,9 +1,11 @@
 import { m } from "framer-motion";
-import { Stagger, StaggerItem } from "@/components/motion/primitives";
+import { ImageReveal, Stagger, StaggerItem } from "@/components/motion/primitives";
 import { EASE } from "@/components/motion/variants";
 import { Accent, SectionHeading } from "@/components/ui/Section";
 import { APPROACH } from "@/content/agency";
 import { cn } from "@/lib/cn";
+import { StockPicture } from "@/components/media/StockPicture";
+import { STOCK } from "@/content/media";
 
 /** Méthode en quatre temps, reliée par une ligne qui se trace au défilement. */
 export function Approach({ index = "04", className }: { index?: string; className?: string }) {
@@ -58,6 +60,10 @@ export function Approach({ index = "04", className }: { index?: string; classNam
             ))}
           </Stagger>
         </div>
+
+        <ImageReveal className="mt-16 rounded-[2rem] lg:mt-24">
+          <StockPicture image={STOCK.approche} sizes="(min-width: 1408px) 1300px, 100vw" className="aspect-[4/3] rounded-[2rem] sm:aspect-[21/8]" imgClassName="object-[50%_35%]" />
+        </ImageReveal>
       </div>
     </section>
   );

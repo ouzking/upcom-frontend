@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { PageHero } from "@/components/layout/PageHero";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/primitives";
-import { Logo, Orbits } from "@/components/ui/Brand";
+import { Logo } from "@/components/ui/Brand";
 import { Accent, Eyebrow, SectionHeading } from "@/components/ui/Section";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumbJsonLd } from "@/lib/seo";
@@ -11,6 +11,8 @@ import { MISSION, OBJECTIVES, PRESENTATION, VALUES, VISION } from "@/content/age
 import { Approach } from "@/sections/home/Approach";
 import { TeamPreview } from "@/sections/home/TeamPreview";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
+import { StockPicture } from "@/components/media/StockPicture";
+import { EXPERTISE_IMAGES } from "@/content/media";
 
 export default function AboutPage() {
   return (
@@ -42,10 +44,11 @@ export default function AboutPage() {
             </p>
           </Reveal>
           <Reveal delay={0.15} className="relative lg:col-span-6">
-            <div className="relative mx-auto aspect-square max-w-md">
-              <Orbits className="absolute inset-0" />
-              <div className="absolute inset-[18%] flex items-center justify-center rounded-full bg-mist p-10">
-                <Logo large className="h-auto w-full" />
+            <div className="relative">
+              {/* Espace de création sans personne identifiable : la pastille du logo ne présente personne comme l'équipe UPCOM. */}
+              <StockPicture image={EXPERTISE_IMAGES["identite-visuelle-creation-graphique"]!} sizes="(min-width: 1024px) 45vw, 100vw" priority className="aspect-[4/3] rounded-[2rem]" />
+              <div className="absolute -bottom-8 left-6 rounded-2xl bg-white p-4 shadow-[0_24px_60px_-24px_rgba(1,53,146,0.45)] sm:left-10">
+                <Logo className="h-auto w-24 sm:w-28" sizes="112px" />
               </div>
             </div>
           </Reveal>

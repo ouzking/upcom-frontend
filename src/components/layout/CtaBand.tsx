@@ -1,6 +1,7 @@
 import { Phone } from "lucide-react";
 import { Reveal, SplitWords } from "@/components/motion/primitives";
-import { Mark, Orbits, Slashes } from "@/components/ui/Brand";
+import { AmbientVideo } from "@/components/media/AmbientVideo";
+import { Orbits, Slashes } from "@/components/ui/Brand";
 import { ButtonAnchor, ButtonLink } from "@/components/ui/Button";
 import { PRIMARY_CTA } from "@/config/site";
 import { useSiteInfo } from "@/hooks/queries";
@@ -13,7 +14,7 @@ interface CtaBandProps {
   to?: string;
 }
 
-/** Appel à l'action final : l'un des rares aplats en dégradé du site. */
+/** Appel à l'action final : vidéo d'ambiance sous un voile en dégradé de la charte. */
 export function CtaBand({
   title = "Un projet en tête ? Parlons-en.",
   text = "Stratégie, création, production, événement ou accompagnement : décrivez-nous votre besoin, nous revenons vers vous avec une proposition adaptée.",
@@ -25,11 +26,16 @@ export function CtaBand({
   return (
     <section className="defer-render container-page py-20 sm:py-28" aria-labelledby="cta-title">
       <div className="relative isolate overflow-hidden rounded-[2rem] bg-gradient-brand px-6 py-16 text-white sm:rounded-[2.5rem] sm:px-14 sm:py-20 lg:px-20 lg:py-24">
-        <div className="absolute inset-0 -z-10 bg-noise" aria-hidden="true" />
-        <Orbits tone="dark" className="absolute -right-32 -top-40 -z-10 size-[42rem] opacity-80" />
-        <div className="absolute -bottom-10 right-10 -z-10 hidden w-[26rem] opacity-[0.12] mix-blend-luminosity lg:block" aria-hidden="true">
-          <Mark className="w-full brightness-[3] grayscale" />
+        {/* Vidéo d'ambiance sous un voile bleu de la charte : le texte reste parfaitement lisible. */}
+        <div className="absolute inset-0 -z-20" aria-hidden="true">
+          <AmbientVideo />
         </div>
+        <div
+          className="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgba(1,26,74,0.95)_0%,rgba(1,53,146,0.88)_50%,rgba(1,114,231,0.6)_100%)]"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 -z-10 bg-noise" aria-hidden="true" />
+        <Orbits tone="dark" className="absolute -right-32 -top-40 -z-10 size-[42rem] opacity-70" />
 
         <div className="max-w-3xl">
           <Slashes className="h-3.5" />

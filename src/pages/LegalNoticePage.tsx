@@ -71,6 +71,12 @@ export default function LegalNoticePage() {
             interdite.
           </p>
 
+          <h2>Crédits photographiques</h2>
+          <p>
+            Certaines photographies et vidéos d'illustration proviennent de Pexels (pexels.com) et sont utilisées sous licence Pexels. Elles illustrent les
+            activités de l'agence et ne représentent ni ses équipes, ni ses clients, ni ses réalisations.
+          </p>
+
           <h2>Données personnelles</h2>
           <p>
             Le traitement des informations transmises via les formulaires est décrit dans la <Link to={ROUTES.privacy}>politique de confidentialité</Link>.

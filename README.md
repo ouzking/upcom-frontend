@@ -136,6 +136,21 @@ Hypothèses à confirmer :
 
 ---
 
+## Visuels d'illustration (photos et vidéo)
+
+En attendant les visuels propres à UPCOM, le design est habillé de photos et d'une vidéo d'ambiance
+(professionnels africains) issues de **Pexels**, licence Pexels : usage commercial gratuit, sans attribution
+obligatoire. Liste et sources : `src/assets/stock/CREDITS.md` ; références : `src/content/media.ts`.
+
+- Emplacements : photo de chaque pôle (accueil, Services, page du pôle, Expertise, prestations sans image),
+  duo « L'agence » de l'accueil, bandeau « Notre approche », page À propos, vidéo du bandeau « Un projet en tête ? ».
+- **Règle** : jamais dans les réalisations, l'équipe, les actualités ou les événements, qui ne montrent que les
+  contenus réels saisis au back-office.
+- WebP en 640 / 1024 / 1600 px (`srcset`), chargement différé ; la vidéo (≈ 0,5 Mo mobile, 1,6 Mo sinon) ne se
+  charge qu'à l'approche de l'écran et laisse place à une image fixe si les animations sont réduites.
+- Pour remplacer un visuel : déposer les fichiers `nom-640.webp`, `nom-1024.webp`, `nom-1600.webp` (ratio 3:2)
+  dans `src/assets/stock/` avec le même nom.
+
 ## Design & expérience
 
 - **Charte** : bleu `#013592` dominant, orange `#FD8E03` en accent, dégradés officiels réservés au hero et au
