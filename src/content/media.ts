@@ -40,13 +40,17 @@ export const STOCK = {
   agenceCollaboration: stock("agence-collaboration", "Trois collaborateurs travaillant ensemble autour d'un ordinateur portable"),
   approche: stock("approche", "Présentation d'une stratégie sur un tableau blanc"),
   videoPoster: stock("video-poster", "Présentation devant un auditoire lors d'une conférence"),
+  // En-têtes de pages (illustrations, distinctes des contenus publiés depuis le back-office)
+  pageRealisations: stock("page-realisations", "Équipe travaillant ensemble autour d'un ordinateur portable"),
+  pageActualites: stock("page-actualites", "Professionnel consultant son ordinateur portable"),
+  pageEvenements: stock("page-evenements", "Intervenante prenant la parole derrière un pupitre"),
 } as const;
 
 /** Un visuel par pôle d'activité (clé : slug de `service_categories`). */
 export const EXPERTISE_IMAGES: Readonly<Record<string, StockImage>> = {
   "communication-strategique": stock("pole-strategie", "Réunion de travail autour d'une table dans une salle de conférence"),
   "communication-digitale": stock("pole-digital", "Professionnelle souriante travaillant sur ordinateur portable"),
-  "identite-visuelle-creation-graphique": stock("pole-creation", "Espace de création avec planches graphiques, croquis et ordinateur"),
+  "identite-visuelle-creation-graphique": stock("pole-creation", "Créatrice travaillant sur un visuel à son ordinateur"),
   "production-audiovisuelle": stock("pole-audiovisuel", "Caméra professionnelle de tournage sur trépied"),
   evenementiel: stock("pole-evenementiel", "Intervenante prenant la parole au micro lors d'une conférence"),
   "services-aux-entreprises": stock("pole-services", "Professionnelle travaillant à son bureau"),

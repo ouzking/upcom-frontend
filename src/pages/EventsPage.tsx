@@ -16,6 +16,7 @@ import { useEvents } from "@/hooks/queries";
 import { dateParts, formatDateRange } from "@/lib/format";
 import { isUpcoming } from "@/repositories/events.repository";
 import type { EventItem } from "@/types/domain";
+import { STOCK } from "@/content/media";
 
 function FeaturedEvent({ event }: { event: EventItem }) {
   const { day, month, year } = dateParts(event.startsAt);
@@ -71,6 +72,7 @@ export default function EventsPage() {
       />
       <PageHero
         eyebrow="Événements"
+        image={STOCK.pageEvenements}
         title="Les rendez-vous UPCOM."
         accentWords={["rendez-vous"]}
         intro="Conférences, séminaires, lancements, cérémonies, salons : retrouvez les événements organisés ou accompagnés par UPCOM."

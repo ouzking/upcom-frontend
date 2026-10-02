@@ -11,6 +11,7 @@ import { FilterPills, SearchInput } from "@/components/ui/Filters";
 import { ROUTES } from "@/config/site";
 import { useArticleCategories, useArticles } from "@/hooks/queries";
 import { useDebouncedValue, useHydratedSearchParams } from "@/hooks/ui";
+import { STOCK } from "@/content/media";
 
 export default function NewsPage() {
   const [params, setParams] = useHydratedSearchParams();
@@ -51,7 +52,7 @@ export default function NewsPage() {
         description="Les actualités d'UPCOM AGENCY & SERVICES : projets, temps forts et coulisses de l'agence."
         jsonLd={breadcrumbJsonLd([{ name: "Actualités", path: ROUTES.news }])}
       />
-      <PageHero eyebrow="Actualités" title="L'actualité de l'agence." accentWords={["l'agence"]} crumbs={[{ label: "Actualités" }]}>
+      <PageHero eyebrow="Actualités" title="L'actualité de l'agence." accentWords={["l'agence"]} crumbs={[{ label: "Actualités" }]} image={STOCK.pageActualites}>
         <NewsTabs />
       </PageHero>
 

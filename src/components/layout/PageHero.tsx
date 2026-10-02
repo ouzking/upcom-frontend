@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { SplitWords } from "@/components/motion/primitives";
 import { Orbits } from "@/components/ui/Brand";
 import { Eyebrow } from "@/components/ui/Section";
+import { StockPicture } from "@/components/media/StockPicture";
+import type { StockImage } from "@/content/media";
 import { cn } from "@/lib/cn";
 
 export interface Crumb {
@@ -48,29 +50,46 @@ interface PageHeroProps {
   crumbs: Crumb[];
   children?: ReactNode;
   className?: string;
+  /** Visuel d'illustration affiché à droite (desktop) ou sous le texte (mobile). */
+  image?: StockImage;
 }
 
 /** En-tête des pages intérieures : clair, typographique, orbite en filigrane. */
-export function PageHero({ eyebrow, title, accentWords, intro, crumbs, children, className }: PageHeroProps) {
+export function PageHero({ eyebrow, title, accentWords, intro, crumbs, children, className, image }: PageHeroProps) {
+  const text = (
+    <>
+      {/* Animations CSS : contenu visible dès l'affichage de la page pré-rendue (sans attendre le JavaScript). */}
+      <div className="mt-10 animate-fade-up">
+        <Eyebrow>{eyebrow}</Eyebrow>
+      </div>
+      <h1 className="mt-6 max-w-5xl text-display-lg text-ink">
+        <SplitWords text={title} accentWords={accentWords} accentClassName="text-brand" immediate delay={0.1} />
+      </h1>
+      {intro ? (
+        <div className="mt-8 max-w-2xl animate-fade-up text-lead text-muted" style={{ animationDelay: "0.2s" }}>
+          {intro}
+        </div>
+      ) : null}
+      {children}
+    </>
+  );
+
   return (
     <section className={cn("relative isolate overflow-hidden bg-mist pb-16 pt-32 sm:pb-20 sm:pt-40 lg:pb-24", className)}>
       <div className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" aria-hidden="true" />
       <Orbits className="absolute -right-40 -top-32 -z-10 hidden size-[40rem] opacity-70 md:block" />
       <div className="container-page">
         <Breadcrumbs items={crumbs} />
-        {/* Animations CSS : contenu visible dès l'affichage de la page pré-rendue (sans attendre le JavaScript). */}
-        <div className="mt-10 animate-fade-up">
-          <Eyebrow>{eyebrow}</Eyebrow>
-        </div>
-        <h1 className="mt-6 max-w-5xl text-display-lg text-ink">
-          <SplitWords text={title} accentWords={accentWords} accentClassName="text-brand" immediate delay={0.1} />
-        </h1>
-        {intro ? (
-          <div className="mt-8 max-w-2xl animate-fade-up text-lead text-muted" style={{ animationDelay: "0.2s" }}>
-            {intro}
+        {image ? (
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-14">
+            <div className="lg:col-span-7">{text}</div>
+            <div className="animate-fade-up lg:col-span-5" style={{ animationDelay: "0.25s" }}>
+              <StockPicture image={image} sizes="(min-width: 1024px) 40vw, 100vw" priority className="aspect-[4/3] rounded-[2rem] shadow-[0_40px_80px_-40px_rgba(1,53,146,0.45)]" />
+            </div>
           </div>
-        ) : null}
-        {children}
+        ) : (
+          text
+        )}
       </div>
     </section>
   );

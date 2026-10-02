@@ -14,6 +14,7 @@ import { useExpertises, useProjects } from "@/hooks/queries";
 import { useDebouncedValue, useHydratedSearchParams } from "@/hooks/ui";
 import { cn } from "@/lib/cn";
 import { normalize } from "@/lib/format";
+import { STOCK } from "@/content/media";
 
 export default function ProjectsPage() {
   const [params, setParams] = useHydratedSearchParams();
@@ -61,6 +62,7 @@ export default function ProjectsPage() {
       />
       <PageHero
         eyebrow="Portfolio"
+        image={STOCK.pageRealisations}
         title="Nos réalisations."
         accentWords={["réalisations"]}
         intro="Une sélection de projets menés pour nos clients, du conseil stratégique à la production."
