@@ -136,6 +136,11 @@ export interface SiteInfo {
   whatsapp: string | null;
   openingHours: string | null;
   mapUrl: string | null;
+  /** Identifiants légaux (`site_settings`) : null s'ils ne sont pas renseignés. */
+  legalForm: string | null;
+  rccm: string | null;
+  ninea: string | null;
+  publicationDirector: string | null;
   socials: SocialLink[];
 }
 

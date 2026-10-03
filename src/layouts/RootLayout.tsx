@@ -4,6 +4,7 @@ import { Outlet, ScrollRestoration, useLocation, useNavigation } from "react-rou
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { Header } from "@/components/layout/Header";
+import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { EASE } from "@/components/motion/variants";
 
 /** Barre de progression fine pendant le chargement d'une page (code splitting). */
@@ -62,6 +63,7 @@ export function RootLayout() {
       </m.main>
       <Footer />
       <WhatsAppButton />
+      <OrganizationJsonLd />
       <ScrollRestoration />
     </>
   );

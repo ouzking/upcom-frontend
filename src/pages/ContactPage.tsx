@@ -11,6 +11,7 @@ import { PRIMARY_CTA } from "@/config/site";
 import { COMPANY } from "@/content/company";
 import { useSiteInfo } from "@/hooks/queries";
 import { telHref, toE164, whatsappHref } from "@/lib/format";
+import { legalIdentifiersJsonLd } from "@/lib/seo";
 
 function InfoBlock({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
   return (
@@ -84,6 +85,7 @@ export default function ContactPage() {
             ...(site?.email ? { email: site.email } : {}),
             ...(site?.openingHours ? { openingHours: site.openingHours } : {}),
             ...(site && site.socials.length > 0 ? { sameAs: site.socials.map((social) => social.url) } : {}),
+            ...legalIdentifiersJsonLd(site),
           },
         }}
       />

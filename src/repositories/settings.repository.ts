@@ -13,8 +13,15 @@ export const DEFAULT_SITE_INFO: SiteInfo = {
   whatsapp: null,
   openingHours: null,
   mapUrl: null,
+  legalForm: null,
+  rccm: null,
+  ninea: null,
+  publicationDirector: null,
   socials: [],
 };
+
+/** Valeur texte renseignée, sinon null (jamais de chaîne vide ni de « null » affiché). */
+const filled = (value: string | null | undefined) => value?.trim() || null;
 
 /** Paramètres globaux (`site_settings`, singleton) et réseaux sociaux actifs. */
 export async function getSiteInfo(): Promise<SiteInfo> {
@@ -23,7 +30,7 @@ export async function getSiteInfo(): Promise<SiteInfo> {
       db
         .from("site_settings")
         .select(
-          "company_name, tagline, description, address, phone_primary, phone_secondary, email, whatsapp_number, opening_hours, map_url",
+          "company_name, tagline, description, address, phone_primary, phone_secondary, email, whatsapp_number, opening_hours, map_url, legal_form, rccm, ninea, publication_director",
         )
         .eq("id", 1)
         .maybeSingle(),
@@ -47,6 +54,10 @@ export async function getSiteInfo(): Promise<SiteInfo> {
     whatsapp: settings?.whatsapp_number || null,
     openingHours: settings?.opening_hours || null,
     mapUrl: settings?.map_url || null,
+    legalForm: filled(settings?.legal_form),
+    rccm: filled(settings?.rccm),
+    ninea: filled(settings?.ninea),
+    publicationDirector: filled(settings?.publication_director),
     socials: socials.map((social) => ({
       id: social.id,
       platform: social.platform,

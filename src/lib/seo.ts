@@ -28,3 +28,9 @@ export interface PageMeta {
 
 /** Fourni uniquement au pré-rendu : <Seo> y déclare les métadonnées de la page rendue. */
 export const SeoCollectorContext = createContext<((meta: PageMeta) => void) | null>(null);
+
+/** Identifiants légaux schema.org (NINEA → taxID, RCCM → identifier), seulement s'ils sont renseignés. */
+export const legalIdentifiersJsonLd = (site: { ninea: string | null; rccm: string | null } | undefined): Record<string, string> => ({
+  ...(site?.ninea ? { taxID: site.ninea } : {}),
+  ...(site?.rccm ? { identifier: site.rccm } : {}),
+});

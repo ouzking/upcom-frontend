@@ -9,6 +9,9 @@ import { telHref } from "@/lib/format";
 export function Footer() {
   const { data: site } = useSiteInfo();
   const { data: expertises = [] } = useExpertises();
+  // Identifiants lÃ©gaux (back-office) : affichÃ©s seulement s'ils sont renseignÃ©s.
+  const legalIds = [site?.rccm ? `RCCM ${site.rccm}` : null, site?.ninea ? `NINEA ${site.ninea}` : null].filter(Boolean);
+  const legalLine = site && legalIds.length > 0 ? [site.companyName, ...legalIds].join(" Â· ") : null;
 
   return (
     <footer className="defer-render relative isolate overflow-hidden bg-brand-night text-white" aria-labelledby="footer-title">
@@ -22,12 +25,12 @@ export function Footer() {
             <h2 id="footer-title" className="sr-only">
               {site?.companyName}
             </h2>
-            <Link to={ROUTES.home} className="inline-block rounded-2xl bg-white p-4" aria-label="UPCOM AGENCY & SERVICES — accueil">
+            <Link to={ROUTES.home} className="inline-block rounded-2xl bg-white p-4" aria-label="UPCOM AGENCY & SERVICES â€” accueil">
               <Logo className="h-20 w-auto" sizes="96px" />
             </Link>
             <p className="mt-8 max-w-sm text-[0.95rem] leading-relaxed text-white/70">{site?.description}</p>
             {site && site.socials.length > 0 ? (
-              <ul className="mt-8 flex flex-wrap gap-2" aria-label="Réseaux sociaux">
+              <ul className="mt-8 flex flex-wrap gap-2" aria-label="RÃ©seaux sociaux">
                 {site.socials.map((social) => (
                   <li key={social.id}>
                     <a
@@ -35,7 +38,7 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex size-11 items-center justify-center rounded-full border border-white/15 transition hover:border-accent hover:bg-accent hover:text-ink"
-                      aria-label={`${social.label} (nouvelle fenêtre)`}
+                      aria-label={`${social.label} (nouvelle fenÃªtre)`}
                     >
                       <SocialIcon platform={social.platform} className="size-[18px]" />
                     </a>
@@ -60,7 +63,7 @@ export function Footer() {
                 </li>
               ))}
               <li className="pt-2">
-                <FooterLink to={ROUTES.projects}>Réalisations</FooterLink>
+                <FooterLink to={ROUTES.projects}>RÃ©alisations</FooterLink>
               </li>
             </FooterColumn>
           </nav>
@@ -97,14 +100,14 @@ export function Footer() {
         <div className="mt-20 flex flex-col-reverse gap-6 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
             <p>
-              © {site?.companyName}. Tous droits réservés.
+              Â© {site?.companyName}. Tous droits rÃ©servÃ©s.
             </p>
-            <nav aria-label="Informations légales" className="flex gap-5">
+            <nav aria-label="Informations lÃ©gales" className="flex gap-5">
               <Link to={ROUTES.legal} className="transition hover:text-accent">
-                Mentions légales
+                Mentions lÃ©gales
               </Link>
               <Link to={ROUTES.privacy} className="transition hover:text-accent">
-                Confidentialité
+                ConfidentialitÃ©
               </Link>
             </nav>
           </div>
@@ -119,6 +122,8 @@ export function Footer() {
             </button>
           </div>
         </div>
+
+        {legalLine ? <p className="mt-6 text-xs tracking-wide text-white/50">{legalLine}</p> : null}
       </div>
     </footer>
   );

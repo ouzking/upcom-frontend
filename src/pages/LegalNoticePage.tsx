@@ -8,19 +8,17 @@ import { telHref } from "@/lib/format";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 /**
- * Mentions légales : seules les informations communiquées par UPCOM figurent ici.
- * Identifiants légaux à renseigner dès qu'UPCOM les fournit (aucune valeur inventée) ;
- * tant que `value` est null, la mention « À compléter par UPCOM » est affichée.
+ * Mentions légales : identifiants légaux lus dans `site_settings` (modifiables depuis le
+ * back-office sans redéploiement). Une ligne sans valeur n'est pas affichée.
  */
-const LEGAL_FIELDS: { label: string; value: string | null }[] = [
-  { label: "Forme juridique", value: null },
-  { label: "RCCM", value: null },
-  { label: "NINEA", value: null },
-  { label: "Directeur de la publication", value: null },
-];
-
 export default function LegalNoticePage() {
   const { data: site } = useSiteInfo();
+  const legalFields = [
+    { label: "Forme juridique", value: site?.legalForm },
+    { label: "RCCM", value: site?.rccm },
+    { label: "NINEA", value: site?.ninea },
+    { label: "Directeur de la publication", value: site?.publicationDirector },
+  ].filter((field): field is { label: string; value: string } => Boolean(field.value));
 
   return (
     <>
@@ -49,14 +47,16 @@ export default function LegalNoticePage() {
               </>
             ) : null}
           </p>
-          <dl className="grid gap-x-8 gap-y-3 rounded-2xl border border-line p-6 text-[0.95rem] sm:grid-cols-[auto_1fr]">
-            {LEGAL_FIELDS.map((field) => (
-              <Fragment key={field.label}>
-                <dt className="font-semibold text-ink">{field.label}</dt>
-                <dd className={field.value ? "text-ink-soft" : "text-muted"}>{field.value ?? "À compléter par UPCOM"}</dd>
-              </Fragment>
-            ))}
-          </dl>
+          {legalFields.length > 0 ? (
+            <dl className="grid gap-x-8 gap-y-3 rounded-2xl border border-line p-6 text-[0.95rem] sm:grid-cols-[auto_1fr]">
+              {legalFields.map((field) => (
+                <Fragment key={field.label}>
+                  <dt className="font-semibold text-ink">{field.label}</dt>
+                  <dd className="text-ink-soft">{field.value}</dd>
+                </Fragment>
+              ))}
+            </dl>
+          ) : null}
 
           <h2>Hébergement</h2>
           <p>
